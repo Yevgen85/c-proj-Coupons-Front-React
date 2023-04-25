@@ -1,0 +1,24 @@
+ .CompanyCard > {
+   /* gap: 10px; */
+}
+
+/*
+.CompanyCard  .card  .details{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width:250px;
+    height: 250px;
+    border-radius: 25px;
+    color: rgb(0, 0, 0);
+    border: solid 2px rgb(0, 13, 114);
+    background: linear-gradient(rgb(251, 250, 171), rgb(121, 255, 175));
+    padding: 0 15px;
+}
+
+
+.CompanyCard > .c_c_buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+} */

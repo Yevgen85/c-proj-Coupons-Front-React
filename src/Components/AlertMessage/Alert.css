@@ -1,0 +1,43 @@
+.alert {
+    background-color: #f44336;
+    color: white;
+    padding: 16px;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    animation: fadeOut 3s forwards;
+  }
+  
+  .alert .message {
+    margin-right: 16px;
+    display: inline-block;
+  }
+  
+  .alert .close {
+    border: none;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    float: right;
+    width: 25px;
+    height: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 16px;
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      display: none;
+    }
+  }

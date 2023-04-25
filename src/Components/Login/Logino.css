@@ -1,0 +1,14 @@
+.Login > form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+    flex-direction: column;
+    gap: 10px;
+}
+
+.Login > form > button {
+    
+    width: 100px;
+    height: 40px;
+}

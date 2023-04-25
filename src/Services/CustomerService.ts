@@ -1,0 +1,66 @@
+import axios from "axios";
+import appConfig from "../Configurations/Config";
+import { authStore } from "../Redux/AuthorisationState";
+import ErrorModel from "../Models/ErrorModel";
+import CustomerModel from "../Models/CustomerModel";
+import { CustomerActionType, customersStore, getFetchAction } from "../Redux/CustomersState";
+
+
+class CustomerService {
+    async getCustomers(): Promise<CustomerModel[]> {
+        if(customersStore.getState().customerList.length === 0) {
+            const headers = { 'Authorization': 'Bearer '+ authStore.getState().token};
+            console.log("headers")
+            console.log(headers)
+            try {
+            const response = await axios.get<CustomerModel[]>(appConfig.apiAddress + '/customer', {headers});
+            customersStore.dispatch(getFetchAction(response.data));
+            console.log('APICall getAll');
+            return response.data;
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        return customersStore.getState().customerList;
+    }
+
+    async addCustomer(customerModel: CustomerModel): Promise<CustomerModel | void> {
+        if (customersStore.getState().customerList.find(c => c.email.match(customerModel.email))) {
+            alert("Customer Email Exists");
+            return;
+        }
+            const headers = { 'Authorization': 'Bearer '+ authStore.getState().token};
+            const response = await axios.post<CustomerModel>(appConfig.apiAddress + "/customer", customerModel , {headers});
+            customersStore.getState().customerList.push(response.data);
+            alert("Sucessful!");
+            return response.data;
+    }
+
+    async getSingleCustomer(id: number): Promise<CustomerModel> { 
+        const index = customersStore.getState().customerList.findIndex(customer => customer.id === id);
+        console.log("single customer index: " + index)    
+        return customersStore.getState().customerList[index];
+    }
+
+    async deleteCustomer(id: number): Promise<void> {
+        if(authStore.getState().user?.clientType.includes('ADMINISTRATOR')) {
+            const headers = { 'Authorization': 'Bearer '+ authStore.getState().token};
+            const response = await axios.delete<void>(appConfig.apiAddress + "/customer/" + id, {headers});
+            customersStore.dispatch({type: CustomerActionType.DeleteCustomer, payload: id});
+        }
+        else {
+            alert("Unauthorised!");
+        }
+    }
+
+    async updateCustomer(id: number, customer: CustomerModel): Promise<CustomerModel> {
+        const headers = { 'Authorization': 'Bearer '+ authStore.getState().token};
+        const response = await axios.put<CustomerModel>(appConfig.apiAddress + "/customer/" + id, customer, {headers});
+        customersStore.dispatch({type: CustomerActionType.UpdateCustomer, payload: id, customer});
+        return response.data;
+    }
+}
+
+const customerService = new CustomerService();
+export default customerService;
+
