@@ -4,28 +4,30 @@ import { useNavigate, useParams } from "react-router";
 import { NavLink } from "react-router-dom";
 
 
-import "./UpdateCompanyForm.css";
+import "./UpdateCouponForm.css";
 
-import CompanyModel from "../../../../Models/CompanyModel";
-import companyService from "../../../../Services/CompanyService";
+
+
 import Alert from "../../../AlertMessage/Alert";
 import tokenService from "../../../../Services/TokenService";
+import CouponModel from "../../../../Models/CouponModel";
+import couponService from "../../../../Services/CouponService";
 
 
 
-function UpdateCompanyForm(): JSX.Element {
+function UpdateCouponForm(): JSX.Element {
 
     const params = useParams();
-    const companyId = +params.companyId!;
+    const couponId = +params.couponId!;
     const navigate = useNavigate();
     const [showAlert, setShowAlert] = useState(false);
    const [message, setMessage] = useState('');
-   const [company, setCompany] = useState<CompanyModel>();
+   const [coupon, setCoupon] = useState<CouponModel>();
 
    useEffect(() => {
-    companyService.getSingleCompany(companyId).then(response => {
+    couponService.getSingleCoupon(couponId).then(response => {
         console.log(response);
-        setCompany(response);
+        setCoupon(response);
     }).catch((error) => alert(error.response.data));
 }, []);
 
@@ -38,16 +40,15 @@ function UpdateCompanyForm(): JSX.Element {
     setShowAlert(false);
   };
 
-    const { register, watch, handleSubmit, formState : {errors}, reset, setValue } = useForm<CompanyModel>();
+    const { register, watch, handleSubmit, formState : {errors}, reset, setValue } = useForm<CouponModel>();
 
-   function updateCompany (updatedCompany: CompanyModel) {
+   function updateCoupon (updatedCoupon: CouponModel) {
     if(tokenService.isTokenNotExpired()) {
-    updatedCompany.id = companyId;
-    updatedCompany.name = company!.name;
-    console.log(updatedCompany)
+    updatedCoupon.id = couponId;
+    console.log(updatedCoupon)
     reset();
-    companyService.updateCompany(companyId, updatedCompany).then(() => {
-        navigate('/companies');  
+    couponService.updateCoupon(couponId, updatedCoupon).then(() => {
+        navigate('/coupons');  
         }).catch(error => {
         alert(error.response.data.value)
     });  
@@ -64,28 +65,23 @@ else {
     return (
   
         <div className="UpdateCompanyForm">
-             <form onSubmit={handleSubmit(updateCompany)}>
-                <h1>Update Company</h1>
-            Name:
+             <form onSubmit={handleSubmit(updateCoupon)}>
+                <h1>Update Coupon</h1>
+            Title:
                         <br />
-                        <input type="text" placeholder={company?.name}  disabled={true} />
-                    {errors.name?.message && <span>{errors.name?.message}</span>}
+                        <input type="text" placeholder={coupon?.title}   />
+                    {errors.title?.message && <span>{errors.title?.message}</span>}
                         <br />
-            Email: 
+            Description: 
                         <br />
                         <input
-                            type="email"
-                            id="email"
-                            placeholder={company?.email}
-                            {...register('email', {
-                                required: 'Email is required',
-                                pattern: {
-                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                message: 'Invalid email address',
-                                },
+                            type="text"
+                            placeholder={coupon?.description}
+                            {...register('description', {
+                                required: 'Description is required'
                             })}
                             />
-                            {errors.email && <span>{errors.email.message}</span>}
+                            {errors.description && <span>{errors.description.message}</span>}
                         <br />
             {/* Password: 
                         <br />
@@ -122,4 +118,4 @@ else {
 }
 
 
-export default UpdateCompanyForm;
+export default UpdateCouponForm;

@@ -1,5 +1,6 @@
 import jwtDecode from "jwt-decode";
-import { authStore } from "../Redux/AuthorisationState";
+import { AuthActionType, authStore, logoutAction } from "../Redux/AuthorisationState";
+
 
 class TokenService {
 
@@ -12,7 +13,8 @@ class TokenService {
           // Token is not expired
           return true;
             } else {
-          // Token is expired
+          alert("Token is expired please login again!")
+          authStore.dispatch(logoutAction())
           return false;
         }
     }

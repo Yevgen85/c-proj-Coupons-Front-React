@@ -4,16 +4,17 @@ import { useNavigate, useParams } from "react-router";
 import { NavLink } from "react-router-dom";
 
 
-import "./UpdateCustomerForm.css";
+import "./UpdateCustomerPassword.css";
 import CustomerModel from "../../../../Models/CustomerModel";
 import customerService from "../../../../Services/CustomerService";
 import Alert from "../../../AlertMessage/Alert";
+import ChangePasswordModel from "../../../../Models/ChangePasswordModel";
 
 
 
 
 
-function UpdateCustomerForm(): JSX.Element {
+function UpdateCustomerPassword(): JSX.Element {
 
     const params = useParams();
     const customerId = +params.customerId!;
@@ -21,28 +22,26 @@ function UpdateCustomerForm(): JSX.Element {
     const [showAlert, setShowAlert] = useState(false);
     const [message, setMessage] = useState('');
     const [customer, setCustomer] = useState<CustomerModel>();
-    const { register, handleSubmit, formState : {errors}, setValue } = useForm<CustomerModel>();
+    const { register, handleSubmit, formState : {errors}, setValue } = useForm<ChangePasswordModel>();
   
     useEffect(() => {
       customerService.getSingleCustomer(customerId).then(response => {
         console.log(response);
         setCustomer(response);
-        setValue('firstName', response.firstName);
-        setValue('lastName', response.lastName);
-        setValue('email', response.email);
         // setValue('password', response.password);
       }).catch((error) => alert(error.response.data));
     }, [customerId, setValue]);
   
-    function updateCustomer(updatedCustomer: CustomerModel) {
-      updatedCustomer.id = customerId;
+    function updatePassword(updatedPassword: ChangePasswordModel) {
+      updatedPassword.id = customerId;
       
-      console.log(updatedCustomer)
+      console.log(updatedPassword)
       
-      customerService.updateCustomer(customerId, updatedCustomer).then(() => {
+      customerService.updateCustomerPassword(customerId, updatedPassword).then(() => {
         navigate('/customers');  
       }).catch(error => {
-        alert(error.data.value)
+        
+        alert(error.response.data.value)
       });  
     }
   
@@ -57,46 +56,17 @@ function UpdateCustomerForm(): JSX.Element {
     return (
   
         <div className="UpdateCustomerForm">
-             <form onSubmit={handleSubmit(updateCustomer)}>
-                <h1>Update Customer</h1>
-            First Name:
-            <br />
-            <input type="text"  {...register("firstName", 
-                    { minLength: {value: 2, message: 'Minimun 2...'}})
-                    } />
-                    {errors.firstName?.message && <span>{errors.firstName?.message}</span>}
-                        <br />
-            Last Name:
-            <br />
-            <input type="text"  {...register("lastName", 
-                    { minLength: {value: 2, message: 'Minimun 2...'}})
-                    } />
-                    {errors.lastName?.message && <span>{errors.lastName?.message}</span>}
-                        <br />
-            Email: 
-                        <br />
-                        <input
-                            type="email"
-                            id="email"
-                            
-                            {...register('email', {
-                                required: 'Email is required',
-                                pattern: {
-                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                message: 'Invalid email address',
-                                },
-                            })}
-                            />
-                            
-                            {errors.email && <span>{errors.email.message}</span>}
-                        <br />
-            {/* Password: 
+             <form onSubmit={handleSubmit(updatePassword)}>
+                <h1>Update Password</h1>
+         
+             Old Password: 
                         <br />
                         <input
                             type="password"
-                            id="password"
+                            placeholder='Old Password'
+                            id="oldPassword"
                             
-                            {...register('password', {
+                            {...register('oldPassword', {
                                 required: 'Password is required',
                                 minLength: {
                                 value: 6,
@@ -104,7 +74,28 @@ function UpdateCustomerForm(): JSX.Element {
                                 },
                             })}
                             />
-                             {errors.password && <span>{errors.password.message}</span>} */}
+                             {errors.oldPassword && <span>{errors.oldPassword.message}</span>} 
+                        <br />
+                        <br />
+                         
+                       
+
+            New Password: 
+                        <br />
+                        <input
+                            type="password"
+                            placeholder='New Password'
+                            id="newPassword"
+                            
+                            {...register('newPassword', {
+                                required: 'Password is required',
+                                minLength: {
+                                value: 6,
+                                message: 'Password must be at least 6 characters long',
+                                },
+                            })}
+                            />
+                             {errors.newPassword && <span>{errors.newPassword.message}</span>} 
                         <br />
                         <br />
                          
@@ -126,4 +117,4 @@ function UpdateCustomerForm(): JSX.Element {
 }
 
 
-export default UpdateCustomerForm;
+export default UpdateCustomerPassword;

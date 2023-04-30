@@ -7,6 +7,7 @@ import { type } from "os";
 import ErrorModel from "../Models/ErrorModel";
 import { error } from "console";
 import ClientType from "../Models/ClientType";
+import ChangePasswordModel from "../Models/ChangePasswordModel";
 
 
 class CompanyService {
@@ -60,16 +61,21 @@ class CompanyService {
         }
     }
 
-    async updateCompany(id: number, company: CompanyModel): Promise<void> {
+    async updateCompany(id: number, company: CompanyModel): Promise<CompanyModel> {
         const headers = { 'Authorization': 'Bearer '+ authStore.getState().token};
-        let response;
-        try {
-        response = await axios.put<CompanyModel>(appConfig.apiAddress + "/company/" + id, company, {headers});
-        companiesStore.dispatch({type: CompanyActionType.UpdateCompany, payload: id, response});
-        } catch (error) {
-            console.log(error)
-        }
-        // return response.data;
+    
+    
+        const response = await axios.put<CompanyModel>(appConfig.apiAddress + "/company/" + id, company, {headers});
+        company.id = id;
+        companiesStore.dispatch({type: CompanyActionType.UpdateCompany, payload: company});
+    
+        return response.data;
+    }
+
+    
+    async updateCompanyPassword(id: number, newPassword: ChangePasswordModel): Promise<any> {
+        const headers = { 'Authorization': 'Bearer '+ authStore.getState().token};
+        await axios.put<ChangePasswordModel>(appConfig.apiAddress + "/company/update-password/" + id, newPassword, {headers});
     }
 }
 

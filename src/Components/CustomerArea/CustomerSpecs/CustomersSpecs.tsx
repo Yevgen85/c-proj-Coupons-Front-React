@@ -35,6 +35,10 @@ function CustomersSpecs(): JSX.Element {
         navigator('/update-customer/' + customerId);
     }
 
+    function updatePassword() {
+        navigator('/update-customer/' + customerId + '/change-password');
+    }
+
     return (
         <div className="CustomerSpecs">
             
@@ -44,8 +48,9 @@ function CustomersSpecs(): JSX.Element {
                 <h1>Customer Last Name: {customer.lastName}</h1>
                 <h2>Email: {customer.email}</h2>
                 <div className="c_c_buttons">
-                <button onClick={deleteCustomer}>Delete Customer</button>
-                <button onClick={updateCustomer}>Update Customer</button>
+                <button onClick={deleteCustomer}>Delete</button>
+                <button onClick={updateCustomer}>Update</button>
+                <button onClick={updatePassword}>Change Password</button>
                 </div>
             </>
             }

@@ -34,6 +34,10 @@ function CompanySpecs(): JSX.Element {
         navigator('/update-company/' + companyId);
     }
 
+    function updatePassword() {
+        navigator('/update-company/' + companyId + '/change-password');
+    }
+
     return (
         <div className="CompanySpecs">
             
@@ -47,6 +51,7 @@ function CompanySpecs(): JSX.Element {
                 <div className="c_c_buttons">
                 <button onClick={deleteCompany}>Delete Company</button>
                 <button onClick={updateCompany}>Update Company</button>
+                <button onClick={updatePassword}>Change Password</button>
                 </div>
             </>
             }

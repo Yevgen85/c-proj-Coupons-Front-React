@@ -4,6 +4,7 @@ import { authStore } from "../Redux/AuthorisationState";
 import ErrorModel from "../Models/ErrorModel";
 import CustomerModel from "../Models/CustomerModel";
 import { CustomerActionType, customersStore, getFetchAction } from "../Redux/CustomersState";
+import ChangePasswordModel from "../Models/ChangePasswordModel";
 
 
 class CustomerService {
@@ -56,8 +57,14 @@ class CustomerService {
     async updateCustomer(id: number, customer: CustomerModel): Promise<CustomerModel> {
         const headers = { 'Authorization': 'Bearer '+ authStore.getState().token};
         const response = await axios.put<CustomerModel>(appConfig.apiAddress + "/customer/" + id, customer, {headers});
-        customersStore.dispatch({type: CustomerActionType.UpdateCustomer, payload: id, customer});
+        customer.id = id;
+        customersStore.dispatch({type: CustomerActionType.UpdateCustomer, payload: customer});
         return response.data;
+    }
+
+    async updateCustomerPassword(id: number, newPassword: ChangePasswordModel): Promise<any> {
+        const headers = { 'Authorization': 'Bearer '+ authStore.getState().token};
+        await axios.put<ChangePasswordModel>(appConfig.apiAddress + "/customer/update-password/" + id, newPassword, {headers});
     }
 }
 

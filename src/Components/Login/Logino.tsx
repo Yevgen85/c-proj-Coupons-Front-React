@@ -19,7 +19,7 @@ function Logino(): JSX.Element {
         console.log(loginModel);
       
         loginService.login(loginModel).then(response => {
-            navigate('/companies');
+            navigate('/');
         }).catch((error) => {
             console.log(error);
         });

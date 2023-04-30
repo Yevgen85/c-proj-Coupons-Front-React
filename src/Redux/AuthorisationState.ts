@@ -81,8 +81,6 @@ export function authReducer(currentState: AuthState = new AuthState(), action: A
 
     switch (action.type) {
 
-        
-
         case AuthActionType.Login:
             const token : {token: string} = action.payload;
             // const token = "eyJhbGciOiJIUzI1NiJ9.eyJjbGllbnRUeXBlIjoiQURNSU5JU1RSQVRPUiIsInVzZXJuYW1lIjoiYWRtaW5AYWRtaW4uY29tIiwiaWF0IjoxNjgxNDA4NzQwLCJleHAiOjE2ODE0MTA1NDB9.9-_GV-EHXmerC1Jn7J8hQgeWyxAu5zieLHia4BIxGg4";
@@ -101,11 +99,6 @@ export function authReducer(currentState: AuthState = new AuthState(), action: A
             console.log(newState.user)
             localStorage.setItem("token", token.token);
             break;
-     
-    
-
-
-
 
         case AuthActionType.Logout:
             newState.token = null;

@@ -12,6 +12,7 @@ import loginService from '../../Services/LoginService';
 import Footer from './Footer/Footer';
 import Navbar from './Navbar/Navbar';
 import UserModel from '../../Models/UserModel';
+import CompanyMenu from '../CompanyMenu/CompanyMenu';
 
 
 function LayoutArea() {
@@ -32,9 +33,9 @@ function showMenu() {
   if (user?.clientType.includes('ADMINISTRATOR')) { 
       return <AdminMenu/>
   }
-  // if (user?.clientType.includes('COMPANY')) { 
-  //   return <CompanyMenu/>
-  // }
+  if (user?.clientType.includes('COMPANY')) { 
+    return <CompanyMenu/>
+  }
   // if (user?.clientType.includes('CUSTOMER')) { 
   //   return <CustomerMenu/>
   // }

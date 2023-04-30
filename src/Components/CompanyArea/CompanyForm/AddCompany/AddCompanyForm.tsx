@@ -62,6 +62,7 @@ function AddCompanyForm(): JSX.Element {
                         <br />
                         <input
                             type="email"
+                            placeholder='Email'
                             id="email"
                             {...register('email', {
                                 required: 'Email is required',
@@ -77,6 +78,7 @@ function AddCompanyForm(): JSX.Element {
                         <br />
                         <input
                             type="password"
+                            placeholder='Password'
                             id="password"
                             {...register('password', {
                                 required: 'Password is required',

@@ -7,7 +7,7 @@ interface CouponModel {
     description: string,
     startDate: Date,
     endDate: Date,
-    anount: number,
+    amount: number,
     price: number,
     image: string,
 }

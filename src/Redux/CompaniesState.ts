@@ -48,7 +48,11 @@ export function companiesReducer(currentState: CompaniesState = new CompaniesSta
             break;
         case CompanyActionType.UpdateCompany:
             const indexToUpdate = newState.companyList.findIndex(company => company.id === action.payload.id);
-            newState.companyList[indexToUpdate] = action.payload;
+            const company: CompanyModel = currentState.companyList[indexToUpdate];
+            const updatedCompany: CompanyModel = action.payload;
+            updatedCompany.id = company.id;
+            newState.companyList.splice(indexToUpdate, 1 ,updatedCompany)
+            console.log(newState.companyList)
             break;
         case CompanyActionType.DeleteCompany:
             const indexToDelete = newState.companyList.findIndex(company => company.id === action.payload);

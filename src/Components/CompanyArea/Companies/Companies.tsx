@@ -6,6 +6,7 @@ import companyService from '../../../Services/CompanyService';
 import CompanyCard from '../CompanyCard/CompanyCard';
 import './Companies.css';
 import tokenService from '../../../Services/TokenService';
+import { companiesStore } from '../../../Redux/CompaniesState';
 
 
 function Companies(): JSX.Element {
@@ -18,17 +19,25 @@ function Companies(): JSX.Element {
         if(authStore.getState().token !== null && tokenService.isTokenNotExpired()) {
             console.log("token not null" + authStore.getState().token)
         companyService.getCompanies().then((response) => {
-        setCompanies(response);
-        console.log(response);
+            console.log(response);
+            setCompanies(response);
     }).catch((error) => {
         console.log(error);
     });
-    
 }
 else {
     navigate('/login');
 }
     }, []);
+
+
+    useEffect(() => {
+        setCompanies(companiesStore.getState().companyList);
+        const unsubscribe = companiesStore.subscribe(() => {
+            setCompanies(companiesStore.getState().companyList);
+        });
+        return () => unsubscribe();
+    },[]);
     
     return (
 

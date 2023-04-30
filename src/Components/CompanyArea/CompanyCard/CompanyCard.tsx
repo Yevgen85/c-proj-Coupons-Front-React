@@ -8,6 +8,7 @@ import './CompanyCard.css';
 
 function CompanyCard(companyProps: CompanyModel): JSX.Element {
 
+    
     return (
          <NavLink to={'/company-details/' + companyProps.id}>
             <div className="CompanyCard">
