@@ -21,7 +21,7 @@ class LoginService {
             const response = await axios.post<string>((appConfig.apiAddress + '/auth/login'), loginModel);
             const token: string = response.data;
             authStore.dispatch(loginAction(token));
-            return token;
+            return response.data;
          
             // const response = await axios.post<boolean>((appConfig.apiAddress + 'login?login=' + myLogin + '&password=' + myPassword));
         }

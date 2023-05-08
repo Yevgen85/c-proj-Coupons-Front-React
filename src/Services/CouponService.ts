@@ -7,7 +7,7 @@ import { CouponActionType, couponsStore, getFetchAction } from "../Redux/Coupons
 
 class CouponService {
     async getCoupons(): Promise<CouponModel[]> {
-        if(couponsStore.getState().couponList.length === 0) {
+        // if(couponsStore.getState().couponList.length === 0) {
             const headers = { 'Authorization': 'Bearer '+ authStore.getState().token};
             console.log("headers")
             console.log(headers)
@@ -15,12 +15,12 @@ class CouponService {
             couponsStore.dispatch(getFetchAction(response.data));
             console.log('APICall getAll');
             return response.data;
-        }
-        return couponsStore.getState().couponList;
+        // }
+        // return couponsStore.getState().couponList;
     }
 
     async getCouponsByCompany(): Promise<CouponModel[]> {
-        if(couponsStore.getState().couponList.length === 0) {
+        // if(couponsStore.getState().couponList.length === 0) {
             const thisCompanyId = authStore.getState().user?.id;
             const headers = { 'Authorization': 'Bearer '+ authStore.getState().token};
             console.log("headers")
@@ -29,8 +29,22 @@ class CouponService {
             couponsStore.dispatch(getFetchAction(response.data));
             console.log('APICall getAll');
             return response.data;
-        }
-        return couponsStore.getState().couponList;
+        // }
+        // return couponsStore.getState().couponList;
+    }
+
+    async getPurchasedCoupons(): Promise<CouponModel[]> {
+        // if(couponsStore.getState().couponList.length === 0) {
+            const thisCustomerId = authStore.getState().user?.id;
+            const headers = { 'Authorization': 'Bearer '+ authStore.getState().token};
+            console.log("headers")
+            console.log(headers)
+            const response = await axios.get<CouponModel[]>(appConfig.apiAddress + '/customer-vs-coupons/' + thisCustomerId, {headers});
+            couponsStore.dispatch(getFetchAction(response.data));
+            console.log('APICall getAll');
+            return response.data;
+        // }
+        // return couponsStore.getState().couponList;
     }
 
     async addCoupon(couponModel: CouponModel): Promise<CouponModel> {
@@ -40,6 +54,7 @@ class CouponService {
         if (couponsStore.getState().couponList.find(c => c.title.match(couponModel.title))) {
             alert("Coupon Title Exists");
         }
+        // authStore.getState().user.
             const headers = { 'Authorization': 'Bearer '+ authStore.getState().token};
             const response = await axios.post<CouponModel>(appConfig.apiAddress + "/coupon", couponModel , {headers});
             couponsStore.getState().couponList.push(response.data);

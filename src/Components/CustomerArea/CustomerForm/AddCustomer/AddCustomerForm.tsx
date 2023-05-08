@@ -57,7 +57,8 @@ function AddCustomerForm(): JSX.Element {
                     {required: {value: true, message: 'This field is mandatory'},
                      minLength: {value: 2, message: 'Minimun 2...'}})
                     } />
-                    {errors.firstName?.message && <span>{errors.firstName?.message}</span>}
+                    <br />
+                    {errors.firstName?.message && <span className="red">{errors.firstName?.message}</span>}
                         <br />
 
             Last Name:
@@ -66,7 +67,8 @@ function AddCustomerForm(): JSX.Element {
                                 {required: {value: true, message: 'This field is mandatory'},
                                  minLength: {value: 2, message: 'Minimun 2...'}})
                                  } />
-                            {errors.lastName?.message && <span>{errors.lastName?.message}</span>}
+                                 <br />
+                            {errors.lastName?.message && <span className="red">{errors.lastName?.message}</span>}
                         <br />
 
             Email: 
@@ -83,7 +85,8 @@ function AddCustomerForm(): JSX.Element {
                                 },
                             })}
                             />
-                            {errors.email && <span>{errors.email.message}</span>}
+                            <br />
+                            {errors.email && <span className="red">{errors.email.message}</span>}
                         <br />
             Password: 
                         <br />
@@ -99,7 +102,8 @@ function AddCustomerForm(): JSX.Element {
                                 },
                             })}
                             />
-                             {errors.password && <span>{errors.password.message}</span>}
+                            <br />
+                             {errors.password && <span className="red">{errors.password.message}</span>}
                         <br />
                         <br />
                          

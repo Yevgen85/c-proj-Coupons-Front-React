@@ -48,7 +48,7 @@ function AddCompanyForm(): JSX.Element {
     return (
   
         <div className="AddCompanyForm">
-             <form onSubmit={handleSubmit(addCompany)}>
+             <form  onSubmit={handleSubmit(addCompany)}>
                 <h1>Add Company</h1>
             Name:
                         <br />
@@ -56,7 +56,8 @@ function AddCompanyForm(): JSX.Element {
                     {required: {value: true, message: 'This field is mandatory'},
                      minLength: {value: 2, message: 'Minimun 2...'}})
                     } />
-                    {errors.name?.message && <span>{errors.name?.message}</span>}
+                      <br />
+                    {errors.name?.message && <span className="red">{errors.name?.message}</span>}
                         <br />
             Email: 
                         <br />
@@ -72,7 +73,8 @@ function AddCompanyForm(): JSX.Element {
                                 },
                             })}
                             />
-                            {errors.email && <span>{errors.email.message}</span>}
+                              <br />
+                            {errors.email && <span className="red">{errors.email.message}</span>}
                         <br />
             Password: 
                         <br />
@@ -88,7 +90,8 @@ function AddCompanyForm(): JSX.Element {
                                 },
                             })}
                             />
-                             {errors.password && <span>{errors.password.message}</span>}
+                              <br />
+                             {errors.password && <span className="red">{errors.password.message}</span>}
                         <br />
                         <br />
                          

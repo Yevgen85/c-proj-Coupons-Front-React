@@ -15,19 +15,24 @@ export enum CouponActionType {
     AddCoupon,
     UpdateCoupon,
     DeleteCoupon,
+    ClearState
 }
 
 
 //3
 export interface CouponAction {
     type: CouponActionType,
-    payload: any
+    payload?: any
 }
 
 
 //4
 export function getFetchAction(couponList: CouponModel[]): CouponAction {
     return {type: CouponActionType.FetchCoupon, payload: couponList};
+}
+
+export function clearCouponStateAction(): CouponAction {
+    return {type: CouponActionType.ClearState};
 }
 
 
@@ -50,6 +55,9 @@ export function couponsReducer(currentState: CouponsState = new CouponsState(), 
         case CouponActionType.DeleteCoupon:
             const indexToDelete = newState.couponList.findIndex(coupon => coupon.id === action.payload);
             newState.couponList.splice(indexToDelete, 1);
+            break;
+        case CouponActionType.ClearState:
+            newState.couponList = [];
             break;
     }
 

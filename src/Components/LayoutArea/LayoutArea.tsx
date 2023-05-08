@@ -13,6 +13,7 @@ import Footer from './Footer/Footer';
 import Navbar from './Navbar/Navbar';
 import UserModel from '../../Models/UserModel';
 import CompanyMenu from '../CompanyMenu/CompanyMenu';
+import CustomerMenu from '../CustomerMenu/CustomerMenu';
 
 
 function LayoutArea() {
@@ -36,9 +37,9 @@ function showMenu() {
   if (user?.clientType.includes('COMPANY')) { 
     return <CompanyMenu/>
   }
-  // if (user?.clientType.includes('CUSTOMER')) { 
-  //   return <CustomerMenu/>
-  // }
+  if (user?.clientType.includes('CUSTOMER')) { 
+    return <CustomerMenu/>
+  }
 }
 
   function login(): void {

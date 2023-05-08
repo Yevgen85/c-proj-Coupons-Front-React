@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import "./CouponSpecs.css";
 import CouponModel from "../../../Models/CouponModel";
 import couponService from "../../../Services/CouponService";
+import { authStore } from "../../../Redux/AuthorisationState";
 
 function CouponSpecs(): JSX.Element {
 
@@ -14,6 +15,7 @@ function CouponSpecs(): JSX.Element {
     const navigator = useNavigate();
 
     const [coupon, setCoupon] = useState<CouponModel>();
+    let isCompany: boolean = authStore.getState().user?.clientType.includes("COMPANY") ? true : false;
 
     useEffect(() => {
         couponService.getSingleCoupon(couponId).then(response => {
@@ -42,14 +44,21 @@ function CouponSpecs(): JSX.Element {
             
             { coupon &&
             <>
-                <h1>Coupon Title: {coupon.title}</h1>
+                <h1>{coupon.title}</h1>
                 <h2>Price: {coupon.price}</h2>
+                <h2>Amount: {coupon.amount}</h2>
+                <h2>Category: {coupon.category.name}</h2>
+                <h2>Description: {coupon.description}</h2>
+                <h2>Start Date: {coupon.startDate.toLocaleString()}</h2>
+                <h2>End Date: {coupon.endDate.toLocaleString()}</h2>
+                <h2>Image: {coupon.image}</h2>
                 {/* <h3>Product Price: {product.price}</h3>
                 <h3>Product Price: {product.stock}</h3>
                 <NavLink to={'/product/' + product.id}>Edit Product</NavLink> */}
                 <div className="c_c_buttons">
-                <button onClick={deleteCoupon}>Delete Coupon</button>
-                <button onClick={updateCoupon}>Update Coupon</button>
+                    
+                {isCompany && <button onClick={deleteCoupon}>Delete Coupon</button>}
+                {isCompany && <button onClick={updateCoupon}>Update Coupon</button>}
                 </div>
             </>
             }

@@ -9,6 +9,8 @@
     background: linear-gradient(rgb(251, 250, 171), rgb(121, 255, 175));
     padding: 0 15px;
     gap: 20px;
+    width: 60%;
+    margin: 20px 0;
     
 }
 

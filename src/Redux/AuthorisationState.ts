@@ -2,6 +2,11 @@ import jwt from 'jsonwebtoken';
 import { createStore } from "redux";
 import UserModel from '../Models/UserModel';
 import jwtDecode from 'jwt-decode';
+import { CompaniesState, clearCompanyStateAction, companiesReducer, companiesStore } from './CompaniesState';
+import { CompanyActionType } from './CompaniesState';
+import { clearCouponStateAction, couponsStore } from './CouponsState';
+import { clearCustomerStateAction, customersStore } from './CustomersState';
+import { clearPurchasedCouponsStateAction, purchasedCouponsStore } from './PurchasedCouponsState';
 
 
 // interface AdminToken {
@@ -103,6 +108,10 @@ export function authReducer(currentState: AuthState = new AuthState(), action: A
         case AuthActionType.Logout:
             newState.token = null;
             newState.user = null;
+            companiesStore.dispatch(clearCompanyStateAction())
+            couponsStore.dispatch(clearCouponStateAction())
+            customersStore.dispatch(clearCustomerStateAction())
+            purchasedCouponsStore.dispatch(clearPurchasedCouponsStateAction())
             localStorage.removeItem("token");
             break;
     }

@@ -13,19 +13,24 @@ export class PurchasedCouponsState {
 export enum PurchasedCouponActionType {
     FetchCoupons,
     AddCoupon,
+    ClearState
 }
 
 
 //3
 export interface PurchasedCouponAction {
     type: PurchasedCouponActionType,
-    payload: any
+    payload?: any
 }
 
 
 //4
-export function getFetchAction(purchasedCouponList: CouponModel[]): PurchasedCouponAction {
+export function getPurchasedFetchAction(purchasedCouponList: CouponModel[]): PurchasedCouponAction {
     return {type: PurchasedCouponActionType.FetchCoupons, payload: purchasedCouponList};
+}
+
+export function clearPurchasedCouponsStateAction(): PurchasedCouponAction {
+    return {type: PurchasedCouponActionType.ClearState};
 }
 
 
@@ -40,6 +45,9 @@ export function purchasedCouponsReducer(currentState: PurchasedCouponsState = ne
             break;
         case PurchasedCouponActionType.AddCoupon:
             newState.purchasedCouponList.push(action.payload);
+            break;
+        case PurchasedCouponActionType.ClearState:
+            newState.purchasedCouponList = [];
             break;
     }
 

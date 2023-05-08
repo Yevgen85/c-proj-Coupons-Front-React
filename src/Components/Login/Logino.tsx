@@ -10,7 +10,7 @@ function Logino(): JSX.Element {
    
 
     
-    const {register ,  handleSubmit} = useForm<LoginModel>({});
+    const {register ,  handleSubmit, formState : {errors}, reset, setValue} = useForm<LoginModel>({});
     const navigate = useNavigate();
   
 
@@ -20,9 +20,9 @@ function Logino(): JSX.Element {
       
         loginService.login(loginModel).then(response => {
             navigate('/');
-        }).catch((error) => {
-            console.log(error);
-        });
+        }).catch(error => {
+            alert(error.response.data.value)
+        });  
         // console.log("store state: " + authStore.getState().token);
     }
       
@@ -34,22 +34,53 @@ function Logino(): JSX.Element {
                 <h2>Please login:</h2>
                 <form onSubmit={handleSubmit(loginFC)}>
                     Login: 
-                        
-                        <input type="text" placeholder='Email' {...register('username')}/>
-                        
+                    
+                    <br />
+                        <input
+                            type="email"
+                            placeholder='@Username'
+                            id="email"
+                            {...register('username', {
+                                required: 'Email is required',
+                                pattern: {
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message: 'Invalid email address',
+                                },
+                            })}
+                            />
+                              <br />
+                            {errors.username && <span className="red">{errors.username.message}</span>}
+                        <br />
                     Password: 
-                        
-                        <input type="password" autoComplete="on" placeholder='**********' {...register('password')}/>
-                        
+                    <br />
+                        <input
+                            type="password"
+                            placeholder='Password'
+                            id="password"
+                            {...register('password', {
+                                required: 'Password is required'
+                            })}
+                            />
+                              <br />
+                             {errors.password && <span className="red">{errors.password.message}</span>}
+                        <br />
+                        <br />
                     Client:
-                        
-                        <select className="clientTypeSelector" {...register('clientType')}>
+                    <br/>
+                        <select className="clientTypeSelector" {...register('clientType', {required: "Please Select Client Type"})}>
+                        <option value="">-SELECT CLIENT TYPE-</option>
                            <option value={"ADMINISTRATOR"}>ADMINISTRATOR</option>
                            <option value={"COMPANY"}>COMPANY</option>
                            <option value={"CUSTOMER"}>CUSTOMER</option>
                         </select>
+                        <br/>
+                        {errors.clientType && <span className="red">{errors.clientType.message}</span>}
                         
-                        
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
                         <button className='submitButton' type='submit'>LOGIN</button>
                         
                 </form>

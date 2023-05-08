@@ -14,13 +14,14 @@ export enum CompanyActionType {
     AddCompany,
     UpdateCompany,
     DeleteCompany,
+    ClearState
 }
 
 
 //3
 export interface CompanyAction {
     type: CompanyActionType,
-    payload: any
+    payload?: any
 }
 
 
@@ -31,6 +32,10 @@ export function getFetchAction(companyList: CompanyModel[]): CompanyAction {
 
 export function getAddAction(company: CompanyModel): CompanyAction {
     return {type: CompanyActionType.AddCompany, payload: company};
+}
+
+export function clearCompanyStateAction(): CompanyAction {
+    return {type: CompanyActionType.ClearState};
 }
 
 
@@ -57,6 +62,9 @@ export function companiesReducer(currentState: CompaniesState = new CompaniesSta
         case CompanyActionType.DeleteCompany:
             const indexToDelete = newState.companyList.findIndex(company => company.id === action.payload);
             newState.companyList.splice(indexToDelete, 1);
+            break;
+        case CompanyActionType.ClearState:
+            newState.companyList = [];
             break;
     }
 

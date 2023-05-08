@@ -1,5 +1,5 @@
 interface CategoryModel {
-    id: string,
+    id: number,
     name: string,
 }
 

@@ -31,14 +31,18 @@ function Routing(): JSX.Element {
     function isCompany(): boolean | undefined {
         return authStore.getState().token !== null && authStore.getState().user?.clientType.includes('COMPANY');
     }
+    function isCustomer(): boolean | undefined {
+        return authStore.getState().token !== null && authStore.getState().user?.clientType.includes('CUSTOMER');
+    }
 
     return (
-        <div>
+        <>
             <Routes>
                 <Route path="/" element={<MainPage />}/>
                 <Route path="/companies" element={isAdmin() && tokenService.isTokenNotExpired() ? <Companies /> : <Logino/>}/>
                 <Route path="/customers" element={isAdmin() && tokenService.isTokenNotExpired() ? <Customers /> : <Logino/>}/>
-                <Route path="/coupons" element={isCompany() && tokenService.isTokenNotExpired() ? <Coupons /> : <Logino/>}/>
+                <Route path="/coupons" element={(isCompany() || isCustomer()) && tokenService.isTokenNotExpired() ? <Coupons /> : <Logino/>}/>
+                <Route path="/purchased-coupons" element={(isCompany() || isCustomer()) && tokenService.isTokenNotExpired() ? <Coupons /> : <Logino/>}/>
                 <Route path="/login" element={<Logino />}/>
                 <Route path="/company-details/:companyId" element={isAdmin() && tokenService.isTokenNotExpired() ? <CompanySpecs/> : <Logino/>}/>
                 <Route path="/update-company/:companyId" element={isAdmin() && tokenService.isTokenNotExpired() ? <UpdateCompanyForm/> : <Logino/>}/>
@@ -61,7 +65,7 @@ function Routing(): JSX.Element {
                 {/* Page Not Found */}
                 {/* <Route path="*" element={<PageNotFound />} /> */}
             </Routes>
-        </div>
+        </>
     );
 }
 export default Routing;
