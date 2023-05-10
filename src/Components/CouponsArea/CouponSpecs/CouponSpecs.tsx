@@ -16,6 +16,7 @@ function CouponSpecs(): JSX.Element {
 
     const [coupon, setCoupon] = useState<CouponModel>();
     let isCompany: boolean = authStore.getState().user?.clientType.includes("COMPANY") ? true : false;
+    let isCustomer: boolean = authStore.getState().user?.clientType.includes("CUSTOMER") ? true : false;
 
     useEffect(() => {
         couponService.getSingleCoupon(couponId).then(response => {
@@ -38,6 +39,8 @@ function CouponSpecs(): JSX.Element {
     }
 
     
+    
+    
 
     return (
         <div className="CouponSpecs">
@@ -59,6 +62,7 @@ function CouponSpecs(): JSX.Element {
                     
                 {isCompany && <button onClick={deleteCoupon}>Delete Coupon</button>}
                 {isCompany && <button onClick={updateCoupon}>Update Coupon</button>}
+                {/* {isCustomer && <button onClick={purchaseCoupon}>Purchase Coupon</button>} */}
                 </div>
             </>
             }

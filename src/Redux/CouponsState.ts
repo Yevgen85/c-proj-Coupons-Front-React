@@ -15,7 +15,8 @@ export enum CouponActionType {
     AddCoupon,
     UpdateCoupon,
     DeleteCoupon,
-    ClearState
+    ClearState,
+    PurchaseCoupon
 }
 
 
@@ -34,6 +35,7 @@ export function getFetchAction(couponList: CouponModel[]): CouponAction {
 export function clearCouponStateAction(): CouponAction {
     return {type: CouponActionType.ClearState};
 }
+
 
 
 //5
@@ -58,6 +60,9 @@ export function couponsReducer(currentState: CouponsState = new CouponsState(), 
             break;
         case CouponActionType.ClearState:
             newState.couponList = [];
+            break;
+        case CouponActionType.PurchaseCoupon:
+            newState.couponList.push(action.payload);
             break;
     }
 

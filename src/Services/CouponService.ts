@@ -3,6 +3,8 @@ import appConfig from "../Configurations/Config";
 import { authStore } from "../Redux/AuthorisationState";
 import CouponModel from "../Models/CouponModel";
 import { CouponActionType, couponsStore, getFetchAction } from "../Redux/CouponsState";
+import CustomerModel from "../Models/CustomerModel";
+import { number } from "yup";
 
 
 class CouponService {
@@ -83,6 +85,14 @@ class CouponService {
         const response = await axios.put<CouponModel>(appConfig.apiAddress + "/coupon/" + id, coupon, {headers});
         coupon.id = id;
         couponsStore.dispatch({type: CouponActionType.UpdateCoupon, payload: coupon});
+        return response.data;
+    }
+
+    async purchaseCoupon(coupon: CouponModel): Promise<CouponModel> {
+        const headers = { 'Authorization': 'Bearer '+ authStore.getState().token};
+        let customerId: number = authStore.getState().user!.id;
+        const response = await axios.post<CouponModel>(appConfig.apiAddress + "/customer-vs-coupons/" + customerId, coupon, {headers});
+        couponsStore.dispatch({type: CouponActionType.PurchaseCoupon, payload: coupon});
         return response.data;
     }
 

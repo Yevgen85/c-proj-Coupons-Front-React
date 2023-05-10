@@ -41,7 +41,7 @@ function Routing(): JSX.Element {
                 <Route path="/" element={<MainPage />}/>
                 <Route path="/companies" element={isAdmin() && tokenService.isTokenNotExpired() ? <Companies /> : <Logino/>}/>
                 <Route path="/customers" element={isAdmin() && tokenService.isTokenNotExpired() ? <Customers /> : <Logino/>}/>
-                <Route path="/coupons" element={(isCompany() || isCustomer()) && tokenService.isTokenNotExpired() ? <Coupons /> : <Logino/>}/>
+                <Route path="/coupons" element={(isCompany() || isCustomer()) && tokenService.isTokenNotExpired() ? <Coupons/> : <Logino/>}/>
                 <Route path="/purchased-coupons" element={(isCompany() || isCustomer()) && tokenService.isTokenNotExpired() ? <Coupons /> : <Logino/>}/>
                 <Route path="/login" element={<Logino />}/>
                 <Route path="/company-details/:companyId" element={isAdmin() && tokenService.isTokenNotExpired() ? <CompanySpecs/> : <Logino/>}/>
@@ -52,7 +52,7 @@ function Routing(): JSX.Element {
                 <Route path='/update-company/:companyId/change-password' element={isAdmin() && tokenService.isTokenNotExpired() ? <UpdateCompanyPassword/> : <Logino/>}/>
                 
                 <Route path="/customer-details/:customerId" element={isAdmin() && tokenService.isTokenNotExpired() ? <CustomersSpecs/> : <Logino/>}/>
-                <Route path="/coupon-details/:couponId" element={isCompany() && tokenService.isTokenNotExpired() ? <CouponSpecs/> : <Logino/>}/>
+                <Route path="/coupon-details/:couponId" element={(isCompany() || isCustomer()) && tokenService.isTokenNotExpired() ? <CouponSpecs/> : <Logino/>}/>
                 <Route path="/add-company" element={isAdmin() && tokenService.isTokenNotExpired() ? <AddCompanyForm/> : <Logino/>}/>
                 <Route path="/add-customer" element={isAdmin() && tokenService.isTokenNotExpired() ? <AddCustomerForm/> : <Logino/>}/>
                 <Route path="/add-coupon" element={isCompany() && tokenService.isTokenNotExpired() ? <AddCouponForm/> : <Logino/>}/>
