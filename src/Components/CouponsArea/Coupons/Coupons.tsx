@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthState, authStore } from '../../../Redux/AuthorisationState';
-import './Coupons.css';
-import tokenService from '../../../Services/TokenService';
-import CouponModel from '../../../Models/CouponModel';
-import couponService from '../../../Services/CouponService';
-import { couponsStore } from '../../../Redux/CouponsState';
-import CouponCard from '../CouponCard/CouponCard';
-import CategoryModel from '../../../Models/CategoryModel';
-import categoryService from '../../../Services/CategoryService';
-import { useForm } from 'react-hook-form';
-import customerService from '../../../Services/CustomerService';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthState, authStore } from "../../../Redux/AuthorisationState";
+import "./Coupons.css";
+import tokenService from "../../../Services/TokenService";
+import CouponModel from "../../../Models/CouponModel";
+import couponService from "../../../Services/CouponService";
+import { couponsStore } from "../../../Redux/CouponsState";
+import CouponCard from "../CouponCard/CouponCard";
+import CategoryModel from "../../../Models/CategoryModel";
+import categoryService from "../../../Services/CategoryService";
+import { useForm } from "react-hook-form";
+import customerService from "../../../Services/CustomerService";
 
 function Coupons(): JSX.Element {
   const [coupons, setCoupons] = useState<CouponModel[]>([]);
@@ -27,8 +27,12 @@ function Coupons(): JSX.Element {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (authStore.getState().token !== null && tokenService.isTokenNotExpired() && authStore.getState().user?.clientType.includes("COMPANY")) {
-      console.log('token not null' + authStore.getState().token);
+    if (
+      authStore.getState().token !== null &&
+      tokenService.isTokenNotExpired() &&
+      authStore.getState().user?.clientType.includes("COMPANY")
+    ) {
+      console.log("token not null" + authStore.getState().token);
       couponService
         .getCouponsByCompany()
         .then((response) => {
@@ -38,20 +42,23 @@ function Coupons(): JSX.Element {
         .catch((error) => {
           alert(error.response.data.value);
         });
-    }
-    else if (authStore.getState().token !== null && tokenService.isTokenNotExpired() && authStore.getState().user?.clientType.includes("CUSTOMER")) {
-        couponService.getCoupons()
+    } else if (
+      authStore.getState().token !== null &&
+      tokenService.isTokenNotExpired() &&
+      authStore.getState().user?.clientType.includes("CUSTOMER")
+    ) {
+      couponService
+        .getCoupons()
         .then((response) => {
-            console.log(response);
-            setCoupons(response);
-          })
-          .catch((error) => {
-            alert(error.response.data.value);
-          });
+          console.log(response);
+          setCoupons(response);
+        })
+        .catch((error) => {
+          alert(error.response.data.value);
+        });
+    } else {
+      navigate("/login");
     }
-    else {
-        navigate('/login');
-    }    
   }, []);
 
   useEffect(() => {
@@ -74,7 +81,9 @@ function Coupons(): JSX.Element {
       });
   }, []);
 
-  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const categoryName = event.target.value;
     const selectedCategory = categories.find((c) => c.name === categoryName);
     setSelectedCategory(selectedCategory);
@@ -100,32 +109,33 @@ function Coupons(): JSX.Element {
       <div className="filterSelectors">
         filter by MAX price:
         <br />
-        <input type="number" placeholder="Enter Max Price" onChange={handleMaxPriceChange} />
+        <input
+          type="number"
+          placeholder="Enter Max Price"
+          onChange={handleMaxPriceChange}
+        />
         filter by CATEGORY:
         <br />
         <select
           className="categorySelector"
-          {...register('category')}
+          {...register("category")}
           value={selectedCategory?.name}
-        onChange={handleCategoryChange}
+          onChange={handleCategoryChange}
+          defaultValue=""
         >
           <option value="">--ALL CATEGORIES--</option>
           {categories &&
             categories.map((option) => (
-              <option
-                key={option.id}
-                value={option.name}
-                selected={selectedCategory?.name === option.name ? true : false}
-              >
+              <option key={option.name} value={option.name}>
                 {option.name}
               </option>
             ))}
         </select>
       </div>
-      <div className='Coupons'>
-        {filteredCoupons.map(coupon =>
-          <CouponCard key={coupon.id} {...coupon}/>
-        )}
+      <div className="Coupons">
+        {filteredCoupons.map((coupon) => (
+          <CouponCard key={coupon.title} {...coupon} />
+        ))}
       </div>
     </div>
   );

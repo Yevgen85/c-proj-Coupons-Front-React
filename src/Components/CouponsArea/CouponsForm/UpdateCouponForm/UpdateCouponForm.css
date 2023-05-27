@@ -1,32 +1,28 @@
 .UpdateCouponForm {
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
 
-    box-sizing: border-box;
-    justify-content: center;
+  box-sizing: border-box;
+  justify-content: center;
 
-    height: 100%;
-    width: 100%;
-    
-   
+  height: 100%;
+  width: 100%;
 }
 
 .submitButtonDiv {
-    text-align: center;
+  text-align: center;
 }
 
 .UpdateCouponForm > form > h1 {
-    text-align: center;
+  text-align: center;
 }
 
 .UpdateCouponForm > form {
-    text-align: center;
+  text-align: center;
 }
 
 .red {
-    color: rgb(210, 26, 26);
-    font-weight: 700;
+  color: rgb(210, 26, 26);
+  font-weight: 700;
 }
-
-

@@ -1,7 +1,7 @@
 enum ClientType {
-    ADMINISTRATOR,
-    COMPANY,
-    CUSTOMER
-  };
+  ADMINISTRATOR,
+  COMPANY,
+  CUSTOMER,
+}
 
-  export default ClientType;
+export default ClientType;

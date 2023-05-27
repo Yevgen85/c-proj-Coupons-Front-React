@@ -1,4 +1,22 @@
 .CouponCard {
-  
+  position: relative;
 }
 
+.CouponCard > .card > .details > img {
+  width: 150px;
+  border-radius: 20px;
+  position: relative;
+  bottom: 30px;
+  left: 180px;
+}
+
+.CouponCard > .card > .details > p {
+  font-size: 16px;
+}
+
+.purchaseButton {
+  position: absolute;
+  width: 100px;
+  bottom: 5px;
+  left: 5px;
+}

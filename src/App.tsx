@@ -1,12 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import './App.css';
-import LayoutArea from './Components/LayoutArea/LayoutArea';
-
+import "./App.css";
+import LayoutArea from "./Components/LayoutArea/LayoutArea";
 
 function App() {
   return (
-    <div className='App'>
+    <div className="App">
       <LayoutArea />
     </div>
   );

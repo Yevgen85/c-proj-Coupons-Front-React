@@ -6,6 +6,7 @@ import couponService from "../../../../Services/CouponService";
 import "./AddCouponForm.css";
 import CategoryModel from "../../../../Models/CategoryModel";
 import categoryService from "../../../../Services/CategoryService";
+import tokenService from "../../../../Services/TokenService";
 
 function AddCouponForm(): JSX.Element {
   const navigate = useNavigate();
@@ -14,7 +15,6 @@ function AddCouponForm(): JSX.Element {
 
   const {
     register,
-    watch,
     handleSubmit,
     formState: { errors },
     reset,
@@ -22,19 +22,29 @@ function AddCouponForm(): JSX.Element {
   const today = new Date();
 
   const addCoupon = (coupon: CouponModel) => {
-    let categoryObj: CategoryModel | any = categories?.find((c) =>
-      c.name.includes(coupon.category.name)
-    );
-    coupon.category = categoryObj;
-    couponService
-      .addCoupon(coupon)
-      .then(() => {
-        reset();
-        navigate("/coupons");
-      })
-      .catch((error) => {
-        alert(error.response.data.value);
-      });
+    if (tokenService.isTokenNotExpired()) {
+      let categoryObj: CategoryModel | any = categories?.find((c) =>
+        c.name.includes(coupon.category.name)
+      );
+      coupon.category = categoryObj;
+      couponService
+        .addCoupon(coupon)
+        .then((response) => {
+          if(response !== null) {
+          reset();
+          navigate("/company/coupons");
+          }
+          else {
+            reset();
+            
+          }
+        })
+        .catch((error) => {
+          alert(error.response.data.value);
+        });
+    } else {
+      navigate("/login");
+    }
   };
 
   useEffect(() => {
@@ -53,6 +63,7 @@ function AddCouponForm(): JSX.Element {
     <div className="AddCouponForm">
       <form onSubmit={handleSubmit(addCoupon)}>
         <h1>Add Coupon</h1>
+        <div>
         Title:
         <br />
         <input
@@ -61,13 +72,16 @@ function AddCouponForm(): JSX.Element {
           {...register("title", {
             required: { value: true, message: "**This field is mandatory" },
             minLength: { value: 2, message: "**Minimun 2..." },
+            maxLength: {
+              value: 50,
+              message: "Maximum length of 50 characters exceeded",
+            },
           })}
         />
         <br />
         {errors.title?.message && (
           <span className="red">{errors.title?.message}</span>
         )}
-        <br />
         <br />
         Description:
         <br />
@@ -77,6 +91,10 @@ function AddCouponForm(): JSX.Element {
           {...register("description", {
             required: { value: true, message: "**This field is mandatory" },
             minLength: { value: 2, message: "**Minimun 2..." },
+            maxLength: {
+              value: 50,
+              message: "Maximum length of 50 characters exceeded",
+            },
           })}
         />
         <br />
@@ -84,6 +102,20 @@ function AddCouponForm(): JSX.Element {
           <span className="red">{errors.description?.message}</span>
         )}
         <br />
+        Image:
+        <br />
+        <input
+          type="text"
+          placeholder="Image"
+          {...register("image", {
+            required: { value: true, message: "**This field is mandatory" },
+            minLength: { value: 2, message: "**Minimun 2..." },
+          })}
+        />
+        <br />
+        {errors.image?.message && (
+          <span className="red">{errors.image?.message}</span>
+        )}
         <br />
         Category:
         <br />
@@ -106,17 +138,25 @@ function AddCouponForm(): JSX.Element {
           <span className="red">{errors.category?.message}</span>
         )}
         <br />
-        <br />
+        </div>
+        
+        <div>
         Start Date:
         <br />
         <input
           type="date"
           {...register("startDate", {
-            required: { value: true, message: "**This field is mandatory" },
+            required: "**This field is mandatory",
             validate: {
-              notBeforeToday: (value) =>
-                new Date(value) >= new Date(Date.now()) ||
-                "**Start date should not be before today",
+              notBeforeToday: (value) => {
+                const selectedDate = new Date(value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Set current time to midnight for accurate comparison
+                return (
+                  selectedDate >= today ||
+                  "**Start date should not be before today"
+                );
+              },
             },
           })}
         />
@@ -124,7 +164,6 @@ function AddCouponForm(): JSX.Element {
         {errors.startDate?.message && (
           <span className="red">{errors.startDate?.message}</span>
         )}
-        <br />
         <br />
         End Date:
         <br />
@@ -142,7 +181,6 @@ function AddCouponForm(): JSX.Element {
           <span className="red">{errors.endDate?.message}</span>
         )}
         <br />
-        <br />
         Amount:
         <br />
         <input
@@ -151,13 +189,13 @@ function AddCouponForm(): JSX.Element {
           {...register("amount", {
             required: { value: true, message: "**This field is mandatory" },
             min: { value: 1, message: "**Amount cannot be less than 1" },
+            max: { value: 1000, message: "**Amount can be maximum 1,000" },
           })}
         />
         <br />
         {errors.amount?.message && (
           <span className="red">{errors.amount?.message}</span>
         )}
-        <br />
         <br />
         Price:
         <br />
@@ -167,13 +205,17 @@ function AddCouponForm(): JSX.Element {
           {...register("price", {
             required: { value: true, message: "**This field is mandatory" },
             min: { value: 1, message: "**Price cannot be less than 1" },
+            max: {
+              value: 1000000,
+              message: "**Price can be maximum 1,000,000",
+            },
           })}
         />
         <br />
         {errors.price && <span className="red">{errors.price.message}</span>}
         <br />
         <br />
-        <br />
+        </div>
         <div className="submitButtonDiv">
           <button className="submitButton" type="submit">
             ADD

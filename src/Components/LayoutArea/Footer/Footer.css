@@ -1,91 +1,83 @@
 .Footer {
-    display: flex;
-    height: 100%;
-    color: black;
-    box-sizing: border-box;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(14,174,87,1) 0%, rgb(28, 103, 184) 90% );
-   
+  display: flex;
+  height: 100%;
+  color: black;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(14, 174, 87, 1) 0%,
+    rgb(28, 103, 184) 90%
+  );
 }
 
 .Footer h1 {
-    font-size: 24px;
-    color: black;
-    animation: inoutX  10s infinite;
+  font-size: 24px;
+  color: black;
+  animation: inoutX 10s infinite;
 }
 
 @keyframes inoutX {
-    0% {
-        /* transform: translateX(-200%); */
-        color: rgb(255, 0, 0);
-        text-shadow: -2px -5px 10px #000000,
-                       -5px 0px 10px #3a00cd,
-                       -5px 5px 10px #00ff3a;
-    }
-    10% {
-        /* transform: translateX(200%); */
-        color: rgb(255, 162, 0);
-        text-shadow: 2px 5px 10px #000000,
-                       5px 0px 10px #3a00cd,
-                       5px -5px 10px #00ff3a;
-    }
-    20% {
-        /* transform: translateX(200%); */
-        color: rgb(236, 253, 0);
-        text-shadow: -2px -5px 10px #000000,
-                       -5px 0px 10px #3a00cd,
-                       -5px 5px 10px #00ff3a;
-    }
-    30% {
-        /* transform: translateX(200%); */
-        color: rgb(0, 255, 89);
-        text-shadow: 2px 5px 10px #000000,
-                       5px 0px 10px #3a00cd,
-                       5px -5px 10px #00ff3a;
-    }
-    40% {
-        /* transform: translateX(200%); */
-        color: rgb(82, 174, 255);
-        text-shadow: -2px -5px 10px #000000,
-                       -5px 0px 10px #3a00cd,
-                       -5px 5px 10px #00ff3a;
-        
-    }
-    50% {
-        /* transform: translateX(200%); */
-        color: rgb(72, 0, 255);
-        text-shadow: 2px 5px 10px #000000,
-                       5px 0px 10px #3a00cd,
-                       5px -5px 10px #00ff3a;
-    }
-    60% {
-        /* transform: translateX(200%); */
-        color: rgb(149, 0, 255);
-        text-shadow: -2px -5px 10px #000000,
-                       -5px 0px 10px #3a00cd,
-                       -5px 5px 10px #00ff3a;
-    }
-    70% {
-        /* transform: translateX(200%); */
-        color: rgb(163, 212, 255);
-        text-shadow: 2px 5px 10px #000000,
-                       5px 0px 10px #3a00cd,
-                       5px -5px 10px #00ff3a;
-    }
-    80% {
-        /* transform: translateX(200%); */
-        color: rgb(143, 238, 187);
-        text-shadow: -2px -5px 10px #000000,
-                       -5px 0px 10px #3a00cd,
-                       -5px 5px 10px #00ff3a;
-    }
-    90% {
-        /* transform: translateX(200%); */
-        color: rgb(255, 255, 255);
-        text-shadow: 2px 5px 10px #000000,
-                       5px 0px 10px #3a00cd,
-                       5px -5px 10px #00ff3a;
-    }
+  0% {
+    /* transform: translateX(-200%); */
+    color: rgb(255, 0, 0);
+    text-shadow: -2px -5px 10px #000000, -5px 0px 10px #3a00cd,
+      -5px 5px 10px #00ff3a;
+  }
+  10% {
+    /* transform: translateX(200%); */
+    color: rgb(255, 162, 0);
+    text-shadow: 2px 5px 10px #000000, 5px 0px 10px #3a00cd,
+      5px -5px 10px #00ff3a;
+  }
+  20% {
+    /* transform: translateX(200%); */
+    color: rgb(236, 253, 0);
+    text-shadow: -2px -5px 10px #000000, -5px 0px 10px #3a00cd,
+      -5px 5px 10px #00ff3a;
+  }
+  30% {
+    /* transform: translateX(200%); */
+    color: rgb(0, 255, 89);
+    text-shadow: 2px 5px 10px #000000, 5px 0px 10px #3a00cd,
+      5px -5px 10px #00ff3a;
+  }
+  40% {
+    /* transform: translateX(200%); */
+    color: rgb(82, 174, 255);
+    text-shadow: -2px -5px 10px #000000, -5px 0px 10px #3a00cd,
+      -5px 5px 10px #00ff3a;
+  }
+  50% {
+    /* transform: translateX(200%); */
+    color: rgb(72, 0, 255);
+    text-shadow: 2px 5px 10px #000000, 5px 0px 10px #3a00cd,
+      5px -5px 10px #00ff3a;
+  }
+  60% {
+    /* transform: translateX(200%); */
+    color: rgb(149, 0, 255);
+    text-shadow: -2px -5px 10px #000000, -5px 0px 10px #3a00cd,
+      -5px 5px 10px #00ff3a;
+  }
+  70% {
+    /* transform: translateX(200%); */
+    color: rgb(163, 212, 255);
+    text-shadow: 2px 5px 10px #000000, 5px 0px 10px #3a00cd,
+      5px -5px 10px #00ff3a;
+  }
+  80% {
+    /* transform: translateX(200%); */
+    color: rgb(143, 238, 187);
+    text-shadow: -2px -5px 10px #000000, -5px 0px 10px #3a00cd,
+      -5px 5px 10px #00ff3a;
+  }
+  90% {
+    /* transform: translateX(200%); */
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 5px 10px #000000, 5px 0px 10px #3a00cd,
+      5px -5px 10px #00ff3a;
+  }
 }

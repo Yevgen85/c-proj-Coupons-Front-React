@@ -1,18 +1,18 @@
 .UpdateCompanyForm {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    box-sizing: border-box;
-    justify-content: center;
-
-    height: 100%;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  width: 100%;
 }
 
 .submitButtonDiv {
-    text-align: center;
+  text-align: center;
 }
 
 .UpdateCompanyForm > form > h1 {
-    text-align: center;
+  text-align: center;
 }

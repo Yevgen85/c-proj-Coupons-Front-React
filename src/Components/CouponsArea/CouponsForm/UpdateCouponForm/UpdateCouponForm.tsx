@@ -8,55 +8,73 @@ import CategoryModel from "../../../../Models/CategoryModel";
 import categoryService from "../../../../Services/CategoryService";
 import { useParams } from "react-router-dom";
 import { number } from "yup";
+import { authStore } from "../../../../Redux/AuthorisationState";
+import tokenService from "../../../../Services/TokenService";
 
 function UpdateCouponForm(): JSX.Element {
   const navigate = useNavigate();
 
   const params = useParams();
-    const couponId = +params.couponId!;
+  const couponId = +params.couponId!;
   const [categories, setCategories] = useState<CategoryModel[]>();
   const [couponToUpdate, setCouponToUpdate] = useState<CouponModel>();
   const [selected, setSelected] = useState<CategoryModel>();
 
-  const { register, handleSubmit, formState : {errors}, setValue, reset } = useForm<CouponModel>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    reset,
+  } = useForm<CouponModel>();
   const today = new Date();
 
   useEffect(() => {
-    couponService.getSingleCoupon(couponId).then(response => {
-      console.log(response);
+    couponService
+      .getSingleCoupon(couponId)
+      .then((response) => {
+        console.log(response);
 
+        setSelected(response.category);
 
-      setSelected(response.category);
-      
-      setCouponToUpdate(response);
-      setValue('title', response.title);
-      setValue('description', response.description);
-      setValue('category', response.category);
-      setValue('startDate', response.startDate);
-      setValue('endDate', response.endDate);
-      setValue('amount', response.amount);
-      setValue('price', response.price);
-    }).catch((error) => alert(error.response.data));
+        setCouponToUpdate(response);
+        setValue("title", response.title);
+        setValue("description", response.description);
+        setValue("image", response.image);
+        setValue("category", response.category);
+        setValue("startDate", response.startDate);
+        setValue("endDate", response.endDate);
+        setValue("amount", response.amount);
+        setValue("price", response.price);
+      })
+      .catch((error) => alert(error.response.data));
   }, [couponId, setValue]);
 
-
   const updateCoupon = (coupon: CouponModel) => {
-    let categoryObj: CategoryModel | any = categories?.find((c) =>
-      c.name.includes(coupon.category.name)
-    );
-    coupon.category = categoryObj;
-    coupon.id = couponId;
-    couponService
-      .updateCoupon(couponId, coupon)
-      .then(() => {
-        reset();
-        navigate("/coupons");
-      })
-      .catch((error) => {
-        alert(error.response.data.value);
-      });
-  };
+    if (
+      authStore.getState().token !== null &&
+      tokenService.isTokenNotExpired()
+    ) {
+      let categoryObj: CategoryModel | any = categories?.find((c) =>
+        c.name.includes(coupon.category.name)
+      );
 
+      coupon.category = categoryObj;
+      coupon.id = couponId;
+      couponService
+        .updateCoupon(couponId, coupon)
+        .then(() => {
+          reset();
+          navigate("/company/coupons");
+        })
+        .catch((error) => {
+          console.log(error.response.data.value);
+          alert(error.response.data.value);
+        });
+    } else {
+      navigate("/login");
+    }
+  };
   useEffect(() => {
     categoryService
       .getCategories()
@@ -68,8 +86,6 @@ function UpdateCouponForm(): JSX.Element {
         alert(error.response.data.value);
       });
   }, []);
-
-
 
   return (
     <div className="UpdateCouponForm">
@@ -83,13 +99,16 @@ function UpdateCouponForm(): JSX.Element {
           {...register("title", {
             required: { value: true, message: "**This field is mandatory" },
             minLength: { value: 2, message: "**Minimun 2..." },
+            maxLength: {
+              value: 50,
+              message: "Maximum length of 50 characters exceeded",
+            },
           })}
         />
         <br />
         {errors.title?.message && (
           <span className="red">{errors.title?.message}</span>
         )}
-        <br />
         <br />
         Description:
         <br />
@@ -99,6 +118,10 @@ function UpdateCouponForm(): JSX.Element {
           {...register("description", {
             required: { value: true, message: "**This field is mandatory" },
             minLength: { value: 2, message: "**Minimun 2..." },
+            maxLength: {
+              value: 50,
+              message: "Maximum length of 50 characters exceeded",
+            },
           })}
         />
         <br />
@@ -106,11 +129,25 @@ function UpdateCouponForm(): JSX.Element {
           <span className="red">{errors.description?.message}</span>
         )}
         <br />
+        Image:
+        <br />
+        <input
+          type="text"
+          placeholder="Image"
+          {...register("image", {
+            required: { value: true, message: "**This field is mandatory" },
+            minLength: { value: 2, message: "**Minimun 2..." },
+          })}
+        />
+        <br />
+        {errors.image?.message && (
+          <span className="red">{errors.image?.message}</span>
+        )}
         <br />
         Category:
         <br />
         <select
-        // defaultChecked={}
+          // defaultChecked={}
           className="categorySelector"
           {...register("category.name", {
             required: { value: true, message: "**This field is mandatory" },
@@ -119,7 +156,11 @@ function UpdateCouponForm(): JSX.Element {
           <option value="">--SELECT CATEGORY--</option>
           {categories &&
             categories.map((option) => (
-              <option  key={option.id} value={option.name} selected={selected?.name === option.name ? true : false}>
+              <option
+                key={option.id}
+                value={option.name}
+                selected={selected?.name === option.name ? true : false}
+              >
                 {option.name}
               </option>
             ))}
@@ -129,17 +170,22 @@ function UpdateCouponForm(): JSX.Element {
           <span className="red">{errors.category?.message}</span>
         )}
         <br />
-        <br />
         Start Date:
         <br />
         <input
           type="date"
           {...register("startDate", {
-            required: { value: true, message: "**This field is mandatory" },
+            required: "**This field is mandatory",
             validate: {
-              notBeforeToday: (value) =>
-                new Date(value) >= new Date(Date.now()) ||
-                "**Start date should not be before today",
+              notBeforeToday: (value) => {
+                const selectedDate = new Date(value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Set current time to midnight for accurate comparison
+                return (
+                  selectedDate >= today ||
+                  "**Start date should not be before today"
+                );
+              },
             },
           })}
         />
@@ -147,7 +193,6 @@ function UpdateCouponForm(): JSX.Element {
         {errors.startDate?.message && (
           <span className="red">{errors.startDate?.message}</span>
         )}
-        <br />
         <br />
         End Date:
         <br />
@@ -165,7 +210,6 @@ function UpdateCouponForm(): JSX.Element {
           <span className="red">{errors.endDate?.message}</span>
         )}
         <br />
-        <br />
         Amount:
         <br />
         <input
@@ -174,13 +218,13 @@ function UpdateCouponForm(): JSX.Element {
           {...register("amount", {
             required: { value: true, message: "**This field is mandatory" },
             min: { value: 1, message: "**Amount cannot be less than 1" },
+            max: { value: 1000, message: "**Amount can be maximum 1,000" },
           })}
         />
         <br />
         {errors.amount?.message && (
           <span className="red">{errors.amount?.message}</span>
         )}
-        <br />
         <br />
         Price:
         <br />
@@ -190,12 +234,14 @@ function UpdateCouponForm(): JSX.Element {
           {...register("price", {
             required: { value: true, message: "**This field is mandatory" },
             min: { value: 1, message: "**Price cannot be less than 1" },
+            max: {
+              value: 1000000,
+              message: "**Price can be maximum 1,000,000",
+            },
           })}
         />
         <br />
         {errors.price && <span className="red">{errors.price.message}</span>}
-        <br />
-        <br />
         <br />
         <div className="submitButtonDiv">
           <button className="submitButton" type="submit">
