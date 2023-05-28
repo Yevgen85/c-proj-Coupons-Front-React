@@ -8,6 +8,8 @@ import CustomerModel from "../../../../Models/CustomerModel";
 import customerService from "../../../../Services/CustomerService";
 import Alert from "../../../AlertMessage/Alert";
 import ChangePasswordModel from "../../../../Models/ChangePasswordModel";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function UpdateCustomerPassword(): JSX.Element {
   const params = useParams();
@@ -30,7 +32,7 @@ function UpdateCustomerPassword(): JSX.Element {
         console.log(response);
         setCustomer(response);
       })
-      .catch((error) => alert(error.response.data));
+      .catch((error) => toast.error(error.response.data.value));
   }, [customerId, setValue]);
 
   function updatePassword(updatedPassword: ChangePasswordModel) {
@@ -39,11 +41,11 @@ function UpdateCustomerPassword(): JSX.Element {
     customerService
       .updateCustomerPassword(customerId, updatedPassword)
       .then(() => {
-        alert("Success!");
+        toast.success("Success!");
         navigate("/admin/customers");
       })
       .catch((error) => {
-        alert(error.response.data.value);
+        toast.error(error.response.data.value);
       });
   }
 

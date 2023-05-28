@@ -7,6 +7,8 @@ import CouponModel from "../../../Models/CouponModel";
 import couponService from "../../../Services/CouponService";
 import { authStore } from "../../../Redux/AuthorisationState";
 import tokenService from "../../../Services/TokenService";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function CouponSpecs(): JSX.Element {
   const params = useParams();
@@ -36,7 +38,7 @@ function CouponSpecs(): JSX.Element {
           navigator("/");
         }
       })
-      .catch((error) => alert(error.response.data));
+      .catch((error) => toast.error(error.response.data.value));
   }, []);
 
   function deleteCoupon() {
@@ -48,9 +50,10 @@ function CouponSpecs(): JSX.Element {
         couponService
           .deleteCoupon(couponId)
           .then((response) => {
+            toast.success("Success!")
             navigator("/company/coupons");
           })
-          .catch((error) => alert(error.response.data));
+          .catch((error) => toast.error(error.response.data.value));
       }
     } else {
       navigator("/login");

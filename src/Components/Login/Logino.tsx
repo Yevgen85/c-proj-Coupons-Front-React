@@ -5,6 +5,10 @@ import LoginModel from "../../Models/LoginModel";
 import { authStore, loginAction } from "../../Redux/AuthorisationState";
 import loginService from "../../Services/LoginService";
 import "./Logino.css";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { POSITION } from "react-toastify/dist/utils";
+import { posix } from "path";
 
 function Logino(): JSX.Element {
   const {
@@ -22,10 +26,11 @@ function Logino(): JSX.Element {
     loginService
       .login(loginModel)
       .then((response) => {
+        toast.success("Welcome!", {position: toast.POSITION.BOTTOM_RIGHT})
         navigate("/");
       })
       .catch((error) => {
-        alert(error.response.data.value);
+        toast.error(error.response.data.value);
       });
     // console.log("store state: " + authStore.getState().token);
   }

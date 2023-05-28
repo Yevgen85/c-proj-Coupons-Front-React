@@ -11,6 +11,8 @@ import ErrorModel from "../../../../Models/ErrorModel";
 import customerService from "../../../../Services/CustomerService";
 import CustomerModel from "../../../../Models/CustomerModel";
 import tokenService from "../../../../Services/TokenService";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddCustomerForm(): JSX.Element {
   const navigate = useNavigate();
@@ -29,11 +31,16 @@ function AddCustomerForm(): JSX.Element {
       reset();
       customerService
         .addCustomer(customer)
-        .then(() => {
+        .then((res) => {
+          if(res === undefined) {
+            reset()
+          }
+          else {
           navigate("/admin/customers");
+          }
         })
         .catch((error) => {
-          alert(error.response.data.value);
+          toast.error(error.response.data.value);
         });
     } else {
       navigate("/login");

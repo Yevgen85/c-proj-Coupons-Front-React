@@ -9,6 +9,8 @@ import customerService from "../../../../Services/CustomerService";
 import Alert from "../../../AlertMessage/Alert";
 import tokenService from "../../../../Services/TokenService";
 import { authStore } from "../../../../Redux/AuthorisationState";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function UpdateCustomerForm(): JSX.Element {
   const params = useParams();
@@ -32,7 +34,7 @@ function UpdateCustomerForm(): JSX.Element {
         setValue("lastName", response.lastName);
         setValue("email", response.email);
       })
-      .catch((error) => alert(error.response.data));
+      .catch((error) => toast.error(error.response.data.value));
   }, [customerId, setValue]);
 
   function updateCustomer(updatedCustomer: CustomerModel) {
@@ -44,10 +46,11 @@ function UpdateCustomerForm(): JSX.Element {
       customerService
         .updateCustomer(customerId, updatedCustomer)
         .then(() => {
+          toast.success("Success!")
           navigate("/admin/customers");
         })
         .catch((error) => {
-          alert(error.response.data.value);
+          toast.error(error.response.data.value);
         });
     } else {
       navigate("/login");

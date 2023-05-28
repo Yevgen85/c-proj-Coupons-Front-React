@@ -9,6 +9,7 @@ import {
   getFetchAction,
 } from "../Redux/CustomersState";
 import ChangePasswordModel from "../Models/ChangePasswordModel";
+import { toast } from "react-toastify";
 
 class CustomerService {
   async getCustomers(): Promise<CustomerModel[]> {
@@ -35,7 +36,7 @@ class CustomerService {
         .getState()
         .customerList.find((c) => c.email.match(customerModel.email))
     ) {
-      alert("Customer Email Exists");
+      toast.error("Customer Email Exists");
       return;
     }
     const headers = { Authorization: "Bearer " + authStore.getState().token };
@@ -46,7 +47,7 @@ class CustomerService {
     );
     this.getCustomers();
     customersStore.getState().customerList.push(response.data);
-    alert("Sucessful!");
+    toast.success("Customer Added!")
     return response.data;
   }
 
@@ -81,7 +82,7 @@ class CustomerService {
         payload: id,
       });
     } else {
-      alert("Unauthorised!");
+      toast.error("Unauthorised!");
     }
   }
 

@@ -4,11 +4,15 @@ import { useNavigate, useParams } from "react-router";
 import { NavLink } from "react-router-dom";
 
 import "./UpdateCompanyForm.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 import CompanyModel from "../../../../Models/CompanyModel";
 import companyService from "../../../../Services/CompanyService";
 import Alert from "../../../AlertMessage/Alert";
 import tokenService from "../../../../Services/TokenService";
+import { toast } from "react-toastify";
+
+
 
 function UpdateCompanyForm(): JSX.Element {
   const params = useParams();
@@ -24,7 +28,7 @@ function UpdateCompanyForm(): JSX.Element {
         setCompany(response);
         setValue("email", response.email);
       })
-      .catch((error) => alert(error.response.data));
+      .catch((error) => toast.error(error.response.data.value));
 
     // setValue("email", company!.email)
   }, []);
@@ -47,10 +51,11 @@ function UpdateCompanyForm(): JSX.Element {
       companyService
         .updateCompany(companyId, updatedCompany)
         .then(() => {
+          toast.success("Success!")
           navigate("/admin/companies");
         })
         .catch((error) => {
-          alert(error.response.data.value);
+          toast.error(error.response.data.value)
         });
     } else {
       navigate("/login");

@@ -7,6 +7,8 @@ import "./AddCouponForm.css";
 import CategoryModel from "../../../../Models/CategoryModel";
 import categoryService from "../../../../Services/CategoryService";
 import tokenService from "../../../../Services/TokenService";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddCouponForm(): JSX.Element {
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ function AddCouponForm(): JSX.Element {
         .addCoupon(coupon)
         .then((response) => {
           if(response !== null) {
+            toast.success("Success!")
           reset();
           navigate("/company/coupons");
           }
@@ -40,7 +43,7 @@ function AddCouponForm(): JSX.Element {
           }
         })
         .catch((error) => {
-          alert(error.response.data.value);
+          toast.error(error.response.data.value);
         });
     } else {
       navigate("/login");
@@ -55,7 +58,7 @@ function AddCouponForm(): JSX.Element {
         setCategories(response);
       })
       .catch((error) => {
-        alert(error.data);
+        toast.error(error.response.data.value);
       });
   }, []);
 

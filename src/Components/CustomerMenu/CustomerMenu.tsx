@@ -5,6 +5,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { authStore } from "../../Redux/AuthorisationState";
 import tokenService from "../../Services/TokenService";
 import couponService from "../../Services/CouponService";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function CustomerMenu(): JSX.Element {
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ function CustomerMenu(): JSX.Element {
           console.log(response);
         })
         .catch((error) => {
-          alert(error.response.data.value);
+          toast.error(error.response.data.value);
         });
     } else {
       navigate("/login");
@@ -41,7 +43,7 @@ function CustomerMenu(): JSX.Element {
           console.log(response);
         })
         .catch((error) => {
-          alert(error.response.data.value);
+          toast.error(error.response.data.value);
         });
     } else {
       navigate("/login");

@@ -10,6 +10,8 @@ import { useParams } from "react-router-dom";
 import { number } from "yup";
 import { authStore } from "../../../../Redux/AuthorisationState";
 import tokenService from "../../../../Services/TokenService";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function UpdateCouponForm(): JSX.Element {
   const navigate = useNavigate();
@@ -47,7 +49,7 @@ function UpdateCouponForm(): JSX.Element {
         setValue("amount", response.amount);
         setValue("price", response.price);
       })
-      .catch((error) => alert(error.response.data));
+      .catch((error) => toast.error(error.response.data.value));
   }, [couponId, setValue]);
 
   const updateCoupon = (coupon: CouponModel) => {
@@ -64,12 +66,13 @@ function UpdateCouponForm(): JSX.Element {
       couponService
         .updateCoupon(couponId, coupon)
         .then(() => {
+          toast.success("Success!")
           reset();
           navigate("/company/coupons");
         })
         .catch((error) => {
           console.log(error.response.data.value);
-          alert(error.response.data.value);
+          toast.error(error.response.data.value);
         });
     } else {
       navigate("/login");
@@ -83,7 +86,7 @@ function UpdateCouponForm(): JSX.Element {
         setCategories(response);
       })
       .catch((error) => {
-        alert(error.response.data.value);
+        toast.error(error.response.data.value);
       });
   }, []);
 

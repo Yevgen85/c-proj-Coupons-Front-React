@@ -4,8 +4,11 @@ import { NavLink } from "react-router-dom";
 import CompanyModel from "../../../Models/CompanyModel";
 import companyService from "../../../Services/CompanyService";
 
+
 import "./CompanySpecs.css";
 import tokenService from "../../../Services/TokenService";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function CompanySpecs(): JSX.Element {
   const params = useParams();
@@ -21,7 +24,7 @@ function CompanySpecs(): JSX.Element {
         console.log(response);
         setCompany(response);
       })
-      .catch((error) => alert(error.response.data));
+      .catch((error) => toast.error(error.response.data.value));
   }, []);
 
   function deleteCompany() {
@@ -32,9 +35,11 @@ function CompanySpecs(): JSX.Element {
       companyService
         .deleteCompany(companyId)
         .then((response) => {
+          // toast.success("deleted")
+          toast.success("Success!")
           navigator("/admin/companies");
         })
-        .catch((error) => alert(error.response.data));
+        .catch((error) => toast.error(error.response.data.value));
     } else {
       navigator("/login");
     }

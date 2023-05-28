@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { NavLink } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "./AddCompanyForm.css";
 
@@ -9,6 +11,7 @@ import CompanyModel from "../../../../Models/CompanyModel";
 import companyService from "../../../../Services/CompanyService";
 import Alert from "../../../AlertMessage/Alert";
 import tokenService from "../../../../Services/TokenService";
+import { clear } from "console";
 
 function AddCompanyForm(): JSX.Element {
   const navigate = useNavigate();
@@ -28,11 +31,16 @@ function AddCompanyForm(): JSX.Element {
       reset();
       companyService
         .addCompany(company)
-        .then(() => {
+        .then((res) => {
+          if(res === undefined) {
+            reset()
+          }
+          else {
           navigate("/admin/companies");
+          }
         })
         .catch((error) => {
-          alert(error.response.data.value);
+          toast.error(error.response.data.value);
         });
     } else {
       navigate("/login");

@@ -6,6 +6,8 @@ import "./CustomersSpecs.css";
 import CustomerModel from "../../../Models/CustomerModel";
 import customerService from "../../../Services/CustomerService";
 import tokenService from "../../../Services/TokenService";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function CustomersSpecs(): JSX.Element {
   const params = useParams();
@@ -21,7 +23,7 @@ function CustomersSpecs(): JSX.Element {
         console.log(response);
         setCustomer(response);
       })
-      .catch((error) => alert(error.response.data));
+      .catch((error) => toast.error(error.response.data.value));
   }, []);
 
   function deleteCustomer() {
@@ -32,9 +34,10 @@ function CustomersSpecs(): JSX.Element {
       customerService
         .deleteCustomer(customerId)
         .then((response) => {
+          toast.success("Success!");
           navigator("/admin/customers");
         })
-        .catch((error) => alert(error.response.data));
+        .catch((error) => toast.error(error.response.data.value));
     } else {
       navigator("/login");
     }

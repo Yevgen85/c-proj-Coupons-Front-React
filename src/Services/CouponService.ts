@@ -9,6 +9,7 @@ import {
 } from "../Redux/CouponsState";
 import CustomerModel from "../Models/CustomerModel";
 import { number } from "yup";
+import { toast } from "react-toastify";
 
 class CouponService {
   async getCoupons(): Promise<CouponModel[]> {
@@ -68,7 +69,7 @@ class CouponService {
         .getState()
         .couponList.find((c) => c.title.match(couponModel.title))
     ) {
-      alert("Coupon Title Exists");
+      toast.error("Coupon Title Exists");
     }
     else {
     // authStore.getState().user.
@@ -79,7 +80,6 @@ class CouponService {
       { headers }
     );
     couponsStore.getState().couponList.push(response.data);
-    alert("Sucessful!");
     return response.data;
     }
     return null;
@@ -113,7 +113,7 @@ class CouponService {
         payload: id,
       });
     } else {
-      alert("Unauthorised!");
+      toast.error("Unauthorised!");
     }
   }
 

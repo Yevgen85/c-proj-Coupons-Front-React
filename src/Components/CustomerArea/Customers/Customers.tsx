@@ -6,6 +6,8 @@ import CustomerModel from "../../../Models/CustomerModel";
 import customerService from "../../../Services/CustomerService";
 import CustomerCard from "../CustomerCard/CustomerCard";
 import tokenService from "../../../Services/TokenService";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Customers(): JSX.Element {
   const [customers, setCustomers] = useState<CustomerModel[]>([]);
@@ -24,7 +26,7 @@ function Customers(): JSX.Element {
           console.log(response);
         })
         .catch((error) => {
-          console.log(error);
+          toast.error(error.response.data.value)
         });
     } else {
       navigate("/login");

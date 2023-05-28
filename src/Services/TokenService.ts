@@ -4,6 +4,7 @@ import {
   authStore,
   logoutAction,
 } from "../Redux/AuthorisationState";
+import { toast } from "react-toastify";
 
 class TokenService {
   isTokenNotExpired() {
@@ -15,7 +16,7 @@ class TokenService {
       // Token is not expired
       return true;
     } else {
-      alert("Token is expired please login again!");
+      toast.error("Token is expired please login again!");
       authStore.dispatch(logoutAction());
       return false;
     }

@@ -11,6 +11,8 @@ import CategoryModel from "../../../Models/CategoryModel";
 import categoryService from "../../../Services/CategoryService";
 import { useForm } from "react-hook-form";
 import customerService from "../../../Services/CustomerService";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Coupons(): JSX.Element {
   const [coupons, setCoupons] = useState<CouponModel[]>([]);
@@ -40,7 +42,7 @@ function Coupons(): JSX.Element {
           setCoupons(response);
         })
         .catch((error) => {
-          alert(error.response.data.value);
+          toast.error(error.response.data.value);
         });
     } else if (
       authStore.getState().token !== null &&
@@ -54,7 +56,7 @@ function Coupons(): JSX.Element {
           setCoupons(response);
         })
         .catch((error) => {
-          alert(error.response.data.value);
+          toast.error(error.response.data.value);
         });
     } else {
       navigate("/login");
@@ -77,7 +79,7 @@ function Coupons(): JSX.Element {
         setCategories(response);
       })
       .catch((error) => {
-        alert(error.response.data.value);
+        toast.error(error.response.data.value);
       });
   }, []);
 

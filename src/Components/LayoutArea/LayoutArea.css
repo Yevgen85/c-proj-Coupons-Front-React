@@ -9,7 +9,7 @@
 
 .LayoutArea > .center {
   display: flex;
-  background-color: rgb(213, 213, 213);
+  background-color: rgba(14, 174, 86, 0.082);
   height: 86%;
   width: 100%;
   box-sizing: border-box;
@@ -36,9 +36,10 @@
 
 .LayoutArea > .center > .menu {
   width: 20%;
-  background-color: rgb(55, 66, 56);
+  background-color: rgb(89, 143, 113);
   padding: 0px 10px;
   box-sizing: border-box;
+  border-right: 1px black solid;
 }
 
 /* 

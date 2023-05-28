@@ -14,6 +14,8 @@ import { error } from "console";
 import ClientType from "../Models/ClientType";
 import ChangePasswordModel from "../Models/ChangePasswordModel";
 import { id } from "date-fns/locale";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class CompanyService {
   async getCompanies(): Promise<CompanyModel[]> {
@@ -39,7 +41,7 @@ class CompanyService {
         .getState()
         .companyList.find((c) => c.name.match(companyModel.name))
     ) {
-      alert("Company Name Exists");
+      toast.error("Company Name Exists");
       return;
     }
 
@@ -48,7 +50,7 @@ class CompanyService {
         .getState()
         .companyList.find((c) => c.email.match(companyModel.email))
     ) {
-      alert("Company Email Exists");
+      toast.error("Company Email Exists");
       return;
     }
     const headers = { Authorization: "Bearer " + authStore.getState().token };
@@ -60,7 +62,7 @@ class CompanyService {
 
     this.getCompanies();
     companiesStore.getState().companyList.push(response.data);
-    alert("Sucessful!");
+    toast.success("Company Added");
     return response.data;
   }
 
@@ -90,6 +92,7 @@ class CompanyService {
         { headers }
       );
 
+      
       // add .then and .catch if not deleted
 
       companiesStore.dispatch({
@@ -97,7 +100,7 @@ class CompanyService {
         payload: id,
       });
     } else {
-      alert("Unauthorised!");
+      toast.error("Unauthorised!");
     }
   }
 

@@ -4,6 +4,8 @@ import CouponModel from "../../../Models/CouponModel";
 import { format, parseISO } from "date-fns";
 import { authStore } from "../../../Redux/AuthorisationState";
 import couponService from "../../../Services/CouponService";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function isCompany(): boolean {
   if (authStore.getState().user?.clientType.includes("COMPANY")) {
@@ -31,10 +33,10 @@ function CouponCard(couponProps: CouponModel): JSX.Element {
     couponService
       .purchaseCoupon(couponProps)
       .then((response) => {
-        alert("Success!");
+        toast.success("Success!");
       })
       .catch((error) => {
-        alert(error.response.data.value);
+        toast.error(error.response.data.value);
       });
     navigator("/coupons");
   }
@@ -57,7 +59,7 @@ function CouponCard(couponProps: CouponModel): JSX.Element {
             </p>
             {isCompany() && <p>Amount: {couponProps.amount}</p>}
             <p>Price: {couponProps.price}</p>
-            <img src={couponProps.image} alt={"pic"} />
+            <img loading="lazy" src={couponProps.image} alt={"pic"} />
           </div>
           <div>
             {isCustomer() && location.pathname === "/customer/coupons" && (

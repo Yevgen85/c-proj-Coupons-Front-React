@@ -9,6 +9,8 @@ import Alert from "../../../AlertMessage/Alert";
 import ChangePasswordModel from "../../../../Models/ChangePasswordModel";
 import CompanyModel from "../../../../Models/CompanyModel";
 import companyService from "../../../../Services/CompanyService";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function UpdateCompanyPassword(): JSX.Element {
   const params = useParams();
@@ -30,7 +32,7 @@ function UpdateCompanyPassword(): JSX.Element {
         console.log(response);
         setCompany(response);
       })
-      .catch((error) => alert(error.response.data));
+      .catch((error) => toast.error(error.response.data.value));
   }, [companyId, setValue]);
 
   function updatePassword(updatedPassword: ChangePasswordModel) {
@@ -41,10 +43,11 @@ function UpdateCompanyPassword(): JSX.Element {
     companyService
       .updateCompanyPassword(companyId, updatedPassword)
       .then(() => {
+        toast.success("Success!")
         navigate("/admin/companies");
       })
       .catch((error) => {
-        alert(error.response.data.value);
+        toast.error(error.response.data.value);
       });
   }
 

@@ -5,6 +5,7 @@ import { authStore } from "../../../Redux/AuthorisationState";
 import { useEffect, useState } from "react";
 import loginService from "../../../Services/LoginService";
 import UserModel from "../../../Models/UserModel";
+import { toast } from "react-toastify";
 
 function Navbar(): JSX.Element {
   const [user, setUser] = useState<UserModel>();
@@ -24,6 +25,7 @@ function Navbar(): JSX.Element {
 
   function logOut(): void {
     loginService.logOut();
+    toast.success("Good Bye!", {position: toast.POSITION.BOTTOM_RIGHT});
     navigate("/");
   }
 
