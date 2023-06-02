@@ -7,6 +7,7 @@ import CompanyCard from "../CompanyCard/CompanyCard";
 import "./Companies.css";
 import tokenService from "../../../Services/TokenService";
 import { companiesStore } from "../../../Redux/CompaniesState";
+import { toast } from "react-toastify";
 
 function Companies(): JSX.Element {
   const [companies, setCompanies] = useState<CompanyModel[]>([]);
@@ -25,7 +26,7 @@ function Companies(): JSX.Element {
           setCompanies(response);
         })
         .catch((error) => {
-          console.log(error);
+          toast.error(error.response.data.value)
         });
     } else {
       navigate("/login");

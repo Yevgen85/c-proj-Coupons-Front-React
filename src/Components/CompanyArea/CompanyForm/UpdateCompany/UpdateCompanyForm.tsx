@@ -47,7 +47,7 @@ function UpdateCompanyForm(): JSX.Element {
       updatedCompany.id = companyId;
       updatedCompany.name = company!.name;
       console.log(updatedCompany);
-      reset();
+      // reset();
       companyService
         .updateCompany(companyId, updatedCompany)
         .then(() => {

@@ -8,6 +8,7 @@ import CustomerCard from "../CustomerCard/CustomerCard";
 import tokenService from "../../../Services/TokenService";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { customersStore } from "../../../Redux/CustomersState";
 
 function Customers(): JSX.Element {
   const [customers, setCustomers] = useState<CustomerModel[]>([]);
@@ -31,6 +32,14 @@ function Customers(): JSX.Element {
     } else {
       navigate("/login");
     }
+  }, []);
+
+  useEffect(() => {
+    setCustomers(customersStore.getState().customerList);
+    const unsubscribe = customersStore.subscribe(() => {
+      setCustomers(customersStore.getState().customerList);
+    });
+    return () => unsubscribe();
   }, []);
 
   return (
