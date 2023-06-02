@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import LoginModel from "../../Models/LoginModel";
-import { authStore, loginAction } from "../../Redux/AuthorisationState";
+import { AuthActionType, authStore, loginAction, logoutAction } from "../../Redux/AuthorisationState";
 import loginService from "../../Services/LoginService";
 import "./Logino.css";
 import { toast } from "react-toastify";
@@ -19,6 +19,8 @@ function Logino(): JSX.Element {
     setValue,
   } = useForm<LoginModel>({});
   const navigate = useNavigate();
+
+  authStore.dispatch(logoutAction())
 
   function loginFC(loginModel: LoginModel): void {
     console.log(loginModel);
