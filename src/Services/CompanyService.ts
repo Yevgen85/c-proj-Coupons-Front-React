@@ -14,8 +14,8 @@ import { error } from "console";
 import ClientType from "../Models/ClientType";
 import ChangePasswordModel from "../Models/ChangePasswordModel";
 import { id } from "date-fns/locale";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class CompanyService {
   async getCompanies(): Promise<CompanyModel[]> {
@@ -92,7 +92,6 @@ class CompanyService {
         { headers }
       );
 
-      
       // add .then and .catch if not deleted
 
       companiesStore.dispatch({

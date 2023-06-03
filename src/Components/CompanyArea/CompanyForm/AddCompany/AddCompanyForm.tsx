@@ -9,7 +9,6 @@ import "./AddCompanyForm.css";
 
 import CompanyModel from "../../../../Models/CompanyModel";
 import companyService from "../../../../Services/CompanyService";
-import Alert from "../../../AlertMessage/Alert";
 import tokenService from "../../../../Services/TokenService";
 import { clear } from "console";
 

@@ -42,14 +42,9 @@
   border-right: 1px black solid;
 }
 
-/* 
-.LayoutArea > .center > .content {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-    width: 85%;
-    height: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    
-} */
+.scroll-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9999;
+}

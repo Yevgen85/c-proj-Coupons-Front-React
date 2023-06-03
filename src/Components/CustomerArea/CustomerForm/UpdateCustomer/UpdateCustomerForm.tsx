@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import "./UpdateCustomerForm.css";
 import CustomerModel from "../../../../Models/CustomerModel";
 import customerService from "../../../../Services/CustomerService";
-import Alert from "../../../AlertMessage/Alert";
+
 import tokenService from "../../../../Services/TokenService";
 import { authStore } from "../../../../Redux/AuthorisationState";
 import { toast } from "react-toastify";

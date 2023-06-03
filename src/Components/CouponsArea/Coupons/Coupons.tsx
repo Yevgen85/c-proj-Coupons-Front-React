@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import customerService from "../../../Services/CustomerService";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import ScrollToTop from "react-scroll-to-top";
 
 function Coupons(): JSX.Element {
   const [coupons, setCoupons] = useState<CouponModel[]>([]);
@@ -139,6 +140,7 @@ function Coupons(): JSX.Element {
           <CouponCard key={coupon.title} {...coupon} />
         ))}
       </div>
+    
     </div>
   );
 }

@@ -5,14 +5,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-bootstrap";
+import ScrollToTop from "react-scroll-to-top";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <BrowserRouter>
-  
     <App />
+    <ScrollToTop smooth className="scroll-to-top" />
   </BrowserRouter>
 );
 

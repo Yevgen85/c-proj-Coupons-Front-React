@@ -3,12 +3,10 @@ import MainPage from "../../MainPage/MainPage";
 import Companies from "../CompanyArea/Companies/Companies";
 import CompanySpecs from "../CompanyArea/CompanySpecs/CompanySpecs";
 import Logino from "../Login/Logino";
-
 import Customers from "../CustomerArea/Customers/Customers";
 import AddCustomerForm from "../CustomerArea/CustomerForm/AddCustomer/AddCustomerForm";
 import CustomersSpecs from "../CustomerArea/CustomerSpecs/CustomersSpecs";
-import { AuthState, authStore } from "../../Redux/AuthorisationState";
-import ClientType from "../../Models/ClientType";
+import { authStore } from "../../Redux/AuthorisationState";
 import AddCompanyForm from "../CompanyArea/CompanyForm/AddCompany/AddCompanyForm";
 import UpdateCompanyForm from "../CompanyArea/CompanyForm/UpdateCompany/UpdateCompanyForm";
 import tokenService from "../../Services/TokenService";
@@ -22,7 +20,6 @@ import AddCouponForm from "../CouponsArea/CouponsForm/AddCouponForm/AddCouponFor
 import PageNotFound from "../PageNotFound/PageNotFound";
 
 function Routing(): JSX.Element {
-  
   function isAdmin(): boolean | undefined {
     return (
       authStore.getState().token !== null &&
@@ -45,12 +42,16 @@ function Routing(): JSX.Element {
   return (
     <>
       <Routes>
+        {/* WELCOME */}
         <Route path="/" element={<MainPage />} />
 
+        {/* Login */}
         <Route path="/login" element={<Logino />} />
 
         {/* Page Not Found */}
         <Route path="*" element={<PageNotFound />} />
+
+        {/* ADMIN */}
 
         <Route
           path="admin/companies"
@@ -58,18 +59,18 @@ function Routing(): JSX.Element {
             isAdmin() && tokenService.isTokenNotExpired() ? (
               <Companies />
             ) : (
-              
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
+
         <Route
           path="admin/customers"
           element={
             isAdmin() && tokenService.isTokenNotExpired() ? (
               <Customers />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
@@ -79,7 +80,7 @@ function Routing(): JSX.Element {
             isAdmin() && tokenService.isTokenNotExpired() ? (
               <CompanySpecs />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
@@ -89,7 +90,7 @@ function Routing(): JSX.Element {
             isAdmin() && tokenService.isTokenNotExpired() ? (
               <UpdateCompanyForm />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
@@ -99,7 +100,7 @@ function Routing(): JSX.Element {
             isAdmin() && tokenService.isTokenNotExpired() ? (
               <UpdateCustomerForm />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
@@ -109,7 +110,7 @@ function Routing(): JSX.Element {
             isAdmin() && tokenService.isTokenNotExpired() ? (
               <UpdateCustomerPassword />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
@@ -119,7 +120,7 @@ function Routing(): JSX.Element {
             isAdmin() && tokenService.isTokenNotExpired() ? (
               <UpdateCompanyPassword />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
@@ -129,7 +130,7 @@ function Routing(): JSX.Element {
             isAdmin() && tokenService.isTokenNotExpired() ? (
               <AddCompanyForm />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
@@ -139,7 +140,7 @@ function Routing(): JSX.Element {
             isAdmin() && tokenService.isTokenNotExpired() ? (
               <AddCustomerForm />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
@@ -149,10 +150,12 @@ function Routing(): JSX.Element {
             isAdmin() && tokenService.isTokenNotExpired() ? (
               <CustomersSpecs />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
+
+        {/* COMPANY */}
 
         <Route
           path="company/coupons"
@@ -160,7 +163,7 @@ function Routing(): JSX.Element {
             isCompany() && tokenService.isTokenNotExpired() ? (
               <Coupons />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
@@ -170,7 +173,7 @@ function Routing(): JSX.Element {
             isCompany() && tokenService.isTokenNotExpired() ? (
               <AddCouponForm />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
@@ -181,7 +184,7 @@ function Routing(): JSX.Element {
             tokenService.isTokenNotExpired() ? (
               <CouponSpecs />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
@@ -191,10 +194,12 @@ function Routing(): JSX.Element {
             isCompany() && tokenService.isTokenNotExpired() ? (
               <UpdateCouponForm />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
+
+        {/* CUSTOMER */}
 
         <Route
           path="customer/coupons"
@@ -202,7 +207,7 @@ function Routing(): JSX.Element {
             isCustomer() && tokenService.isTokenNotExpired() ? (
               <Coupons />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
@@ -212,20 +217,10 @@ function Routing(): JSX.Element {
             isCustomer() && tokenService.isTokenNotExpired() ? (
               <Coupons />
             ) : (
-              <Navigate to={'/login'}/>
+              <Navigate to={"/login"} />
             )
           }
         />
-        {/* <Route path="customer/coupons/coupon-details/:couponId" element={(isCompany() || isCustomer()) && tokenService.isTokenNotExpired() ? <CouponSpecs/> : <Logino/>}/> */}
-
-        {/* Students */}
-        {/* <Route path="students/" element={<Students />}/> */}
-        {/* Courses */}
-        {/* <Route path="courses/" element={<Courses />}/> */}
-        {/* Courses */}
-        {/* <Route path="grades/" element={<Grades />}/> */}
-        {/* Page Not Found */}
-        {/* <Route path="*" element={<PageNotFound />} /> */}
       </Routes>
     </>
   );

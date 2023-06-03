@@ -13,6 +13,7 @@ import Navbar from "./Navbar/Navbar";
 import UserModel from "../../Models/UserModel";
 import CompanyMenu from "../CompanyMenu/CompanyMenu";
 import CustomerMenu from "../CustomerMenu/CustomerMenu";
+import ScrollToTop from "react-scroll-to-top";
 
 function LayoutArea() {
   const [user, setUser] = useState<UserModel>();
@@ -55,6 +56,7 @@ function LayoutArea() {
         <div className="menu">{showMenu()}</div>
         <div className="content">
           <Routing />
+          
         </div>
       </div>
 

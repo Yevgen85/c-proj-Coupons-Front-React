@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 import "./UpdateCustomerPassword.css";
 import CustomerModel from "../../../../Models/CustomerModel";
 import customerService from "../../../../Services/CustomerService";
-import Alert from "../../../AlertMessage/Alert";
 import ChangePasswordModel from "../../../../Models/ChangePasswordModel";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -109,11 +108,6 @@ function UpdateCustomerPassword(): JSX.Element {
           </button>
           <br />
           <br />
-          <span>
-            {showAlert && (
-              <Alert message={message} onClose={handleCloseAlert} />
-            )}
-          </span>
         </div>
       </form>
     </div>

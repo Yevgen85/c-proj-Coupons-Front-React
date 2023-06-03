@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import "./AddCustomerForm.css";
 import { authStore } from "../../../../Redux/AuthorisationState";
 import { error } from "console";
-import Alert from "../../../AlertMessage/Alert";
+
 import ErrorModel from "../../../../Models/ErrorModel";
 import customerService from "../../../../Services/CustomerService";
 import CustomerModel from "../../../../Models/CustomerModel";

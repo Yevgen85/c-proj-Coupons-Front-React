@@ -26,7 +26,7 @@ function Companies(): JSX.Element {
           setCompanies(response);
         })
         .catch((error) => {
-          toast.error(error.response.data.value)
+          toast.error(error.response.data.value);
         });
     } else {
       navigate("/login");

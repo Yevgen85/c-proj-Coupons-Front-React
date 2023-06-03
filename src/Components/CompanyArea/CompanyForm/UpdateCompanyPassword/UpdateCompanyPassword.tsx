@@ -5,7 +5,6 @@ import { NavLink } from "react-router-dom";
 
 import "./UpdateCompanyPassword.css";
 
-import Alert from "../../../AlertMessage/Alert";
 import ChangePasswordModel from "../../../../Models/ChangePasswordModel";
 import CompanyModel from "../../../../Models/CompanyModel";
 import companyService from "../../../../Services/CompanyService";

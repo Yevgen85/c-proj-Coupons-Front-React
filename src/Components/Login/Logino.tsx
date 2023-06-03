@@ -6,21 +6,18 @@ import { AuthActionType, authStore, loginAction, logoutAction } from "../../Redu
 import loginService from "../../Services/LoginService";
 import "./Logino.css";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import { POSITION } from "react-toastify/dist/utils";
-import { posix } from "path";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function Logino(): JSX.Element {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
-    setValue,
   } = useForm<LoginModel>({});
   const navigate = useNavigate();
 
-  authStore.dispatch(logoutAction())
+  authStore.dispatch(logoutAction());
 
   function loginFC(loginModel: LoginModel): void {
     console.log(loginModel);
@@ -28,7 +25,7 @@ function Logino(): JSX.Element {
     loginService
       .login(loginModel)
       .then((response) => {
-        toast.success("Welcome!", {position: toast.POSITION.BOTTOM_RIGHT})
+        toast.success("Welcome!", { position: toast.POSITION.BOTTOM_RIGHT });
         navigate("/");
       })
       .catch((error) => {
