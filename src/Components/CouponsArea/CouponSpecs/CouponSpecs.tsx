@@ -18,12 +18,12 @@ function CouponSpecs(): JSX.Element {
   const [coupon, setCoupon] = useState<CouponModel>();
   let isCompany: boolean = authStore
     .getState()
-    .user?.clientType.includes("COMPANY")
+    .user?.clientType?.includes("COMPANY")
     ? true
     : false;
   let isCustomer: boolean = authStore
     .getState()
-    .user?.clientType.includes("CUSTOMER")
+    .user?.clientType?.includes("CUSTOMER")
     ? true
     : false;
 
@@ -38,7 +38,10 @@ function CouponSpecs(): JSX.Element {
           navigator("/");
         }
       })
-      .catch((error) => toast.error(error.response.data.value));
+      .catch((error) => {
+        toast.error(error.response.data.value);
+        navigator("/");
+      });
   }, []);
 
   function deleteCoupon() {

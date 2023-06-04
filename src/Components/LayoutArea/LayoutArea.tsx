@@ -28,11 +28,11 @@ function LayoutArea() {
   }, []);
 
   function showMenu(): JSX.Element {
-    if (user?.clientType.includes("ADMINISTRATOR")) return <AdminMenu />;
+    if (user?.clientType?.includes("ADMINISTRATOR")) return <AdminMenu />;
 
-    if (user?.clientType.includes("COMPANY")) return <CompanyMenu />;
+    if (user?.clientType?.includes("COMPANY")) return <CompanyMenu />;
 
-    if (user?.clientType.includes("CUSTOMER")) return <CustomerMenu />;
+    if (user?.clientType?.includes("CUSTOMER")) return <CustomerMenu />;
 
     return <></>;
   }

@@ -103,7 +103,7 @@ class CouponService {
     }
   }
   async deleteCoupon(id: number): Promise<void> {
-    if (authStore.getState().user?.clientType.includes("COMPANY")) {
+    if (authStore.getState().user?.clientType?.includes("COMPANY")) {
       const headers = { Authorization: "Bearer " + authStore.getState().token };
       await axios.delete<void>(appConfig.apiAddress + "/coupon/" + id, {
         headers,

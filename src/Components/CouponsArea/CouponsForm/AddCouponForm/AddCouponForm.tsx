@@ -26,7 +26,7 @@ function AddCouponForm(): JSX.Element {
   const addCoupon = (coupon: CouponModel) => {
     if (tokenService.isTokenNotExpired()) {
       let categoryObj: CategoryModel | any = categories?.find((c) =>
-        c.name.includes(coupon.category.name)
+        c.name?.includes(coupon.category.name)
       );
       coupon.category = categoryObj;
       couponService

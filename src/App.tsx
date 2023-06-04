@@ -10,7 +10,14 @@ function App() {
     <div className="App">
       <ToastContainer />
       <LayoutArea />
-      <ScrollToTop smooth className="scroll-to-top"  />
+      <ScrollToTop smooth
+  className="scrollUp"
+  style={{
+    borderRadius: '100%',
+    background: 'var(--color-gold-neon)',
+    boxShadow: '0px 3px 2px rgba(0, 0, 0, 0.54)',
+    color: 'blue'
+  }}/>
     </div>
   );
 }

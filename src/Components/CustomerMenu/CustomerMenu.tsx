@@ -15,7 +15,7 @@ function CustomerMenu(): JSX.Element {
     if (
       authStore.getState().token !== null &&
       tokenService.isTokenNotExpired() &&
-      authStore.getState().user?.clientType.includes("CUSTOMER")
+      authStore.getState().user?.clientType?.includes("CUSTOMER")
     ) {
       couponService
         .getCoupons()
@@ -35,7 +35,7 @@ function CustomerMenu(): JSX.Element {
     if (
       authStore.getState().token !== null &&
       tokenService.isTokenNotExpired() &&
-      authStore.getState().user?.clientType.includes("CUSTOMER")
+      authStore.getState().user?.clientType?.includes("CUSTOMER")
     ) {
       couponService
         .getPurchasedCoupons()

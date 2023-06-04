@@ -23,19 +23,19 @@ function Routing(): JSX.Element {
   function isAdmin(): boolean | undefined {
     return (
       authStore.getState().token !== null &&
-      authStore.getState().user?.clientType.includes("ADMINISTRATOR")
+      authStore.getState().user?.clientType?.includes("ADMINISTRATOR")
     );
   }
   function isCompany(): boolean | undefined {
     return (
       authStore.getState().token !== null &&
-      authStore.getState().user?.clientType.includes("COMPANY")
+      authStore.getState().user?.clientType?.includes("COMPANY")
     );
   }
   function isCustomer(): boolean | undefined {
     return (
       authStore.getState().token !== null &&
-      authStore.getState().user?.clientType.includes("CUSTOMER")
+      authStore.getState().user?.clientType?.includes("CUSTOMER")
     );
   }
 

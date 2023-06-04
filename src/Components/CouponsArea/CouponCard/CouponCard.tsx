@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 function isCompany(): boolean {
-  if (authStore.getState().user?.clientType.includes("COMPANY")) {
+  if (authStore.getState().user?.clientType?.includes("COMPANY")) {
     console.log(true);
     return true;
   }
@@ -16,7 +16,7 @@ function isCompany(): boolean {
 }
 
 function isCustomer(): boolean {
-  if (authStore.getState().user?.clientType.includes("CUSTOMER")) {
+  if (authStore.getState().user?.clientType?.includes("CUSTOMER")) {
     console.log(true);
     return true;
   }

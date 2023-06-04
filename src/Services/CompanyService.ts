@@ -85,7 +85,7 @@ class CompanyService {
   }
 
   async deleteCompany(id: number): Promise<void> {
-    if (authStore.getState().user?.clientType.includes("ADMINISTRATOR")) {
+    if (authStore.getState().user?.clientType?.includes("ADMINISTRATOR")) {
       const headers = { Authorization: "Bearer " + authStore.getState().token };
       const response = await axios.delete<void>(
         appConfig.apiAddress + "/company/" + id,

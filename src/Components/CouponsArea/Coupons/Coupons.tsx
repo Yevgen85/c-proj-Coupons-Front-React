@@ -33,7 +33,7 @@ function Coupons(): JSX.Element {
     if (
       authStore.getState().token !== null &&
       tokenService.isTokenNotExpired() &&
-      authStore.getState().user?.clientType.includes("COMPANY")
+      authStore.getState().user?.clientType?.includes("COMPANY")
     ) {
       console.log("token not null" + authStore.getState().token);
       couponService
@@ -48,7 +48,7 @@ function Coupons(): JSX.Element {
     } else if (
       authStore.getState().token !== null &&
       tokenService.isTokenNotExpired() &&
-      authStore.getState().user?.clientType.includes("CUSTOMER")
+      authStore.getState().user?.clientType?.includes("CUSTOMER")
     ) {
       couponService
         .getCoupons()
