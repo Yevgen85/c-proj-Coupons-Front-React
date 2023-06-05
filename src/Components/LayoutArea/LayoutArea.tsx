@@ -53,7 +53,8 @@ function LayoutArea() {
       </div>
 
       <div className="center">
-        <div className="menu">{showMenu()}</div>
+        <div className="menu">
+          {showMenu()}</div>
         <div className="content">
           <Routing />
           

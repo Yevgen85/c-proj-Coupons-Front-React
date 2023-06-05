@@ -137,7 +137,7 @@ function Coupons(): JSX.Element {
       </div>
       <div className="Coupons">
         {filteredCoupons.map((coupon) => (
-          <CouponCard key={coupon.title} {...coupon} />
+          <CouponCard key={coupon.id} {...coupon} />
         ))}
       </div>
     
