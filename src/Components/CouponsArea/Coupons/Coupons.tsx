@@ -140,7 +140,7 @@ function Coupons(): JSX.Element {
           <CouponCard key={coupon.id} {...coupon} />
         ))}
       </div>
-    
+
     </div>
   );
 }
